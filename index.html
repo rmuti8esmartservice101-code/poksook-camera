@@ -12,378 +12,218 @@
 
 <meta
   name="theme-color"
-  content="#0b2630"
+  content="#09242d"
 >
 
-<title>
-  พกสุข Camera
-</title>
-
+<title>พกสุข Camera</title>
 
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 
-
 <style>
+*{box-sizing:border-box}
 
-*{
-  box-sizing:border-box;
-}
-
-
-html,
-body{
+html,body{
   margin:0;
   min-height:100%;
-
-  color:#fff;
-
-  background:
-    linear-gradient(
-      180deg,
-      #102f39,
-      #071c23
-    );
-
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    "Noto Sans Thai",
-    sans-serif;
+  color:white;
+  background:linear-gradient(180deg,#123742,#061b22);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",sans-serif;
 }
 
-
-.hidden{
-  display:none!important;
-}
-
+.hidden{display:none!important}
 
 main{
-  width:min(700px,100%);
+  width:min(680px,100%);
   margin:auto;
-
   padding:
-    17px
-    14px
-    calc(
-      20px +
-      env(safe-area-inset-bottom)
-    );
+    18px 14px
+    calc(25px + env(safe-area-inset-bottom));
 }
 
-
 .brand{
-  text-align:center;
-  font-size:25px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  font-size:27px;
   font-weight:900;
 }
 
+.logo{
+  width:54px;
+  height:54px;
+  display:grid;
+  place-items:center;
+  border-radius:18px;
+  background:linear-gradient(135deg,#17879b,#1bb99e);
+}
 
 .subtitle{
-  margin-top:6px;
-
-  color:#bad0d7;
-
+  margin:8px 0 15px;
   text-align:center;
+  color:#bfd2d8;
 }
-
 
 .card{
-  margin-top:17px;
   padding:14px;
-
-  background:#123945;
-
-  border-radius:23px;
+  background:#123a46;
+  border-radius:24px;
 }
-
 
 .camera{
   position:relative;
-
   width:100%;
-
   aspect-ratio:3/4;
-
   overflow:hidden;
-
-  background:#000;
-
+  background:black;
   border-radius:20px;
 }
 
-
-.camera video,
-.camera img{
+video,img{
   display:block;
-
   width:100%;
   height:100%;
-
   object-fit:cover;
-
-  background:#000;
 }
-
 
 .placeholder{
   position:absolute;
   inset:0;
-  z-index:3;
-
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-
-  padding:25px;
-
-  text-align:center;
-
-  background:#0b252d;
-}
-
-
-.placeholderIcon{
-  width:82px;
-  height:82px;
-
   display:grid;
   place-items:center;
-
-  margin-bottom:12px;
-
-  font-size:40px;
-
-  border-radius:27px;
-
-  background:
-    rgba(25,180,157,.14);
+  padding:30px;
+  text-align:center;
+  background:#09252e;
 }
 
-
-.placeholder h2{
-  margin:0 0 7px;
+.placeholderIcon{
+  width:88px;
+  height:88px;
+  display:grid;
+  place-items:center;
+  margin:auto auto 14px;
+  font-size:43px;
+  border-radius:28px;
+  background:rgba(24,180,157,.13);
 }
-
-
-.placeholder p{
-  margin:0;
-  color:#bad0d7;
-}
-
 
 .frame{
   position:absolute;
-  z-index:5;
-
   left:50%;
   top:50%;
-
-  width:78%;
+  width:75%;
   aspect-ratio:1;
-
-  transform:
-    translate(-50%,-50%);
-
+  transform:translate(-50%,-50%);
   pointer-events:none;
 }
 
-
 .corner{
   position:absolute;
-
   width:55px;
   height:55px;
 }
 
-
 .tl{
-  left:0;
-  top:0;
-
-  border-left:
-    6px solid #fff;
-
-  border-top:
-    6px solid #fff;
+  left:0;top:0;
+  border-left:6px solid white;
+  border-top:6px solid white;
 }
-
 
 .tr{
-  right:0;
-  top:0;
-
-  border-right:
-    6px solid #fff;
-
-  border-top:
-    6px solid #fff;
+  right:0;top:0;
+  border-right:6px solid white;
+  border-top:6px solid white;
 }
-
 
 .bl{
-  left:0;
-  bottom:0;
-
-  border-left:
-    6px solid #fff;
-
-  border-bottom:
-    6px solid #fff;
+  left:0;bottom:0;
+  border-left:6px solid white;
+  border-bottom:6px solid white;
 }
-
 
 .br{
-  right:0;
-  bottom:0;
-
-  border-right:
-    6px solid #fff;
-
-  border-bottom:
-    6px solid #fff;
+  right:0;bottom:0;
+  border-right:6px solid white;
+  border-bottom:6px solid white;
 }
-
 
 .face{
   position:absolute;
-  z-index:5;
-
   left:50%;
   top:50%;
-
   width:62%;
   height:68%;
-
-  transform:
-    translate(-50%,-50%);
-
-  border:
-    3px solid #fff;
-
+  transform:translate(-50%,-50%);
+  border:3px solid white;
   border-radius:45%;
 }
-
 
 .status{
   margin-top:10px;
   padding:12px;
-
-  color:#bad0d7;
-
   text-align:center;
-
-  background:
-    rgba(255,255,255,.06);
-
-  border-radius:14px;
+  color:#c2d3d8;
+  background:rgba(255,255,255,.06);
+  border-radius:15px;
 }
-
 
 .status.ok{
-  color:#dbfff3;
-
-  background:
-    rgba(20,170,119,.2);
+  color:#d9fff2;
+  background:rgba(19,168,119,.2);
 }
-
 
 .status.error{
-  color:#ffdadd;
-
-  background:
-    rgba(223,96,104,.2);
+  color:#ffd8dc;
+  background:rgba(223,96,104,.2);
 }
-
 
 .btn{
   width:100%;
   min-height:58px;
-
   margin-top:9px;
   padding:11px 16px;
-
   border:0;
   border-radius:17px;
-
   font:inherit;
   font-size:18px;
   font-weight:900;
 }
 
-
-.btn:disabled{
-  opacity:.5;
-}
-
-
 .primary{
   color:white;
-
-  background:
-    linear-gradient(
-      135deg,
-      #168b9b,
-      #19b39d
-    );
+  background:linear-gradient(135deg,#168b9b,#19b39d);
 }
-
 
 .green{
   color:white;
-
   background:#13a877;
 }
 
-
 .light{
   color:#17313d;
-
   background:#e8f1f3;
 }
 
-
 .info{
-  margin-top:8px;
-
-  color:#8eabb4;
-
-  text-align:center;
-  font-size:11px;
-}
-
-
-.permissionNote{
   margin-top:10px;
-
-  color:#9eb9c1;
-
   text-align:center;
-
+  color:#9eb7bf;
   font-size:12px;
-  line-height:1.5;
 }
 
-
-canvas{
-  display:none;
-}
-
+canvas{display:none}
 </style>
 
 </head>
-
 
 <body>
 
 <main>
 
-
 <div class="brand">
-  ♡ พกสุข Camera
+  <div class="logo">♡</div>
+  พกสุข Camera
 </div>
-
 
 <div
   id="subtitle"
@@ -391,7 +231,7 @@ canvas{
 ></div>
 
 
-<!-- QR -->
+<!-- QR SCANNER -->
 
 <section
   id="scanPage"
@@ -407,52 +247,44 @@ canvas{
       playsinline
     ></video>
 
-
     <div
       id="scanPlaceholder"
       class="placeholder"
     >
+      <div>
+        <div class="placeholderIcon">
+          ▣
+        </div>
 
-      <div class="placeholderIcon">
-        ◉
+        <h2>พร้อมสแกน QR</h2>
+
+        <p>
+          เปิดกล้องและนำ QR
+          เข้าในกรอบ
+        </p>
       </div>
-
-      <h2>
-        พร้อมสแกน QR
-      </h2>
-
-      <p id="scanPlaceholderText">
-        กำลังเตรียมกล้อง...
-      </p>
-
     </div>
-
 
     <div
       id="scanFrame"
       class="frame hidden"
     >
-
       <div class="corner tl"></div>
       <div class="corner tr"></div>
       <div class="corner bl"></div>
       <div class="corner br"></div>
-
     </div>
 
   </div>
 
-
   <canvas id="scanCanvas"></canvas>
-
 
   <div
     id="scanStatus"
     class="status"
   >
-    กำลังเตรียม Camera...
+    กำลังเตรียมกล้อง...
   </div>
-
 
   <button
     id="scanBtn"
@@ -462,21 +294,12 @@ canvas{
     เปิดกล้องสแกน QR
   </button>
 
-
   <button
     class="btn light"
     onclick="returnHome()"
   >
     กลับระบบพกสุข
   </button>
-
-
-  <div
-    class="permissionNote"
-  >
-    หากเคยอนุญาต Camera ให้เว็บไซต์นี้แล้ว ระบบจะพยายามเปิดกล้องให้อัตโนมัติ
-  </div>
-
 
   <div
     id="scanInfo"
@@ -502,32 +325,29 @@ canvas{
       playsinline
     ></video>
 
-
     <img
       id="preview"
       class="hidden"
     >
 
-
     <div
       id="photoPlaceholder"
       class="placeholder"
     >
+      <div>
+        <div class="placeholderIcon">
+          ◉
+        </div>
 
-      <div class="placeholderIcon">
-        ◉
+        <h2>
+          ถ่ายภาพยืนยัน
+        </h2>
+
+        <p>
+          จัดใบหน้าให้อยู่กลางภาพ
+        </p>
       </div>
-
-      <h2>
-        ถ่ายภาพยืนยัน
-      </h2>
-
-      <p id="photoPlaceholderText">
-        กำลังเตรียมกล้อง...
-      </p>
-
     </div>
-
 
     <div
       id="face"
@@ -536,6 +356,12 @@ canvas{
 
   </div>
 
+  <div
+    id="photoStatus"
+    class="status"
+  >
+    กำลังเตรียมกล้องหน้า...
+  </div>
 
   <button
     id="openPhotoBtn"
@@ -545,7 +371,6 @@ canvas{
     เปิดกล้องหน้า
   </button>
 
-
   <button
     id="captureBtn"
     class="btn primary hidden"
@@ -553,7 +378,6 @@ canvas{
   >
     ถ่ายภาพ
   </button>
-
 
   <button
     id="useBtn"
@@ -563,7 +387,6 @@ canvas{
     ใช้ภาพนี้
   </button>
 
-
   <button
     id="retakeBtn"
     class="btn light hidden"
@@ -572,26 +395,12 @@ canvas{
     ถ่ายใหม่
   </button>
 
-
   <button
     class="btn light"
     onclick="returnHome()"
   >
     กลับระบบพกสุข
   </button>
-
-
-  <div
-    class="permissionNote"
-  >
-    Browser จะเป็นผู้จำสิทธิ์ Camera หากไม่ได้ล้างข้อมูลเว็บไซต์หรือใช้ Private Browsing
-  </div>
-
-
-  <div
-    id="photoInfo"
-    class="info"
-  ></div>
 
 </section>
 
@@ -600,71 +409,43 @@ canvas{
 
 <script>
 
-/* =========================================================
- PARAMS
-========================================================= */
-
 const PARAMS =
   new URLSearchParams(
     location.search
   );
 
-
 const MODE =
   PARAMS.get('mode')
   || 'scan';
-
 
 const APP_MODE =
   PARAMS.get('appMode')
   || 'kiosk';
 
-
 const SESSION =
   PARAMS.get('session')
   || '';
-
 
 const RETURN_URL =
   PARAMS.get('returnUrl')
   || '';
 
-
 const CAMERA_PERMISSION_KEY =
   'poksook_camera_permission_ok';
 
 
-let scanStream =
-  null;
+let scanStream = null;
+let photoStream = null;
 
+let scanLoopId = null;
 
-let photoStream =
-  null;
+let scanning = false;
+let qrFound = false;
 
+let lastScanTime = 0;
 
-let scanLoopId =
-  null;
+let photoData = '';
 
-
-let scanning =
-  false;
-
-
-let qrFound =
-  false;
-
-
-let lastScanTime =
-  0;
-
-
-let photoData =
-  '';
-
-
-/* =========================================================
- INIT
-========================================================= */
 
 window.addEventListener(
   'load',
@@ -673,219 +454,111 @@ window.addEventListener(
 
 
 async function init(){
-
   if (
-    !SESSION
-    ||
+    !SESSION ||
     !RETURN_URL
   ) {
-
     alert(
-      'Camera Session ไม่ครบ กรุณาเปิดจากระบบพกสุข'
+      'Camera Session ไม่ครบ กรุณากลับไปเปิดจากระบบพกสุข'
     );
 
     return;
   }
 
-
   if (
     MODE === 'photo'
   ) {
+    document
+      .getElementById('photoPage')
+      .classList
+      .remove('hidden');
 
     document
-      .getElementById(
-        'photoPage'
-      )
-      .classList.remove(
-        'hidden'
-      );
-
-
-    document
-      .getElementById(
-        'subtitle'
-      )
+      .getElementById('subtitle')
       .textContent =
       'ถ่ายภาพยืนยันสมาชิก';
 
+    if (
+      hasPermissionMemory()
+    ) {
+      const ok =
+        await startPhoto(true);
 
-    await tryAutoPhoto();
+      if (!ok) {
+        showPhotoButton();
+      }
+
+    } else {
+      showPhotoButton();
+    }
 
     return;
   }
 
+  document
+    .getElementById('scanPage')
+    .classList
+    .remove('hidden');
+
+  document
+    .getElementById('subtitle')
+    .textContent =
+    'สแกน QR ประจำตัวสมาชิก';
 
   if (
     typeof jsQR
     !== 'function'
   ) {
-
-    alert(
+    setScanError(
       'โหลดระบบอ่าน QR ไม่สำเร็จ'
     );
 
     return;
   }
 
+  if (
+    hasPermissionMemory()
+  ) {
+    const ok =
+      await startScanner(true);
 
-  document
-    .getElementById(
-      'scanPage'
-    )
-    .classList.remove(
-      'hidden'
+    if (!ok) {
+      showScanButton();
+    }
+
+  } else {
+    showScanButton();
+  }
+}
+
+
+function hasPermissionMemory(){
+  try {
+    return (
+      localStorage.getItem(
+        CAMERA_PERMISSION_KEY
+      )
+      === '1'
     );
 
-
-  document
-    .getElementById(
-      'subtitle'
-    )
-    .textContent =
-    'สแกน QR ประจำตัวสมาชิก';
-
-
-  await tryAutoScanner();
+  } catch(error) {
+    return false;
+  }
 }
 
 
-/* =========================================================
- PERMISSION MEMORY
-========================================================= */
-
-function hasRememberedCameraPermission(){
-
-  return (
-    localStorage.getItem(
-      CAMERA_PERMISSION_KEY
-    )
-    === '1'
-  );
-}
-
-
-function rememberCameraPermission(){
-
+function rememberPermission(){
   try {
-
     localStorage.setItem(
       CAMERA_PERMISSION_KEY,
       '1'
     );
 
-  } catch (_) {}
-
+  } catch(error) {}
 }
 
-
-/* =========================================================
- AUTO START
-========================================================= */
-
-async function tryAutoScanner(){
-
-  const button =
-    document.getElementById(
-      'scanBtn'
-    );
-
-
-  if (
-    hasRememberedCameraPermission()
-  ) {
-
-    document
-      .getElementById(
-        'scanStatus'
-      )
-      .textContent =
-      'กำลังเปิดกล้องอัตโนมัติ...';
-
-
-    const success =
-      await startScanner(true);
-
-
-    if (success) {
-      return;
-    }
-
-  }
-
-
-  document
-    .getElementById(
-      'scanPlaceholderText'
-    )
-    .textContent =
-    'แตะปุ่มด้านล่างเพื่อเปิดกล้อง';
-
-
-  document
-    .getElementById(
-      'scanStatus'
-    )
-    .textContent =
-    'พร้อมเปิดกล้อง';
-
-
-  button.classList.remove(
-    'hidden'
-  );
-}
-
-
-async function tryAutoPhoto(){
-
-  const button =
-    document.getElementById(
-      'openPhotoBtn'
-    );
-
-
-  if (
-    hasRememberedCameraPermission()
-  ) {
-
-    document
-      .getElementById(
-        'photoInfo'
-      )
-      .textContent =
-      'กำลังเปิดกล้องหน้าอัตโนมัติ...';
-
-
-    const success =
-      await startPhoto(true);
-
-
-    if (success) {
-      return;
-    }
-
-  }
-
-
-  document
-    .getElementById(
-      'photoPlaceholderText'
-    )
-    .textContent =
-    'แตะปุ่มด้านล่างเพื่อเปิดกล้องหน้า';
-
-
-  button.classList.remove(
-    'hidden'
-  );
-}
-
-
-/* =========================================================
- CAMERA HELPERS
-========================================================= */
 
 function sleep(ms){
-
   return new Promise(
     resolve =>
       setTimeout(
@@ -900,33 +573,24 @@ function getMedia(
   constraints,
   timeout=12000
 ){
-
   return Promise.race([
-
     navigator.mediaDevices
       .getUserMedia(
         constraints
       ),
 
     new Promise(
-      (_,reject) => {
-
+      (_,reject) =>
         setTimeout(
-          () => {
-
+          () =>
             reject(
               new Error(
                 'เปิดกล้องนานเกินไป'
               )
-            );
-
-          },
+            ),
           timeout
-        );
-
-      }
+        )
     )
-
   ]);
 }
 
@@ -935,313 +599,191 @@ function waitVideo(
   video,
   timeout=6000
 ){
-
   return new Promise(
     resolve => {
-
-      const started =
+      const start =
         Date.now();
 
-
       function check(){
-
         if (
-          video.videoWidth > 0
-          &&
+          video.videoWidth > 0 &&
           video.videoHeight > 0
         ) {
-
           resolve(true);
-
           return;
         }
-
 
         if (
-          Date.now()
-          -
-          started
-          >
-          timeout
+          Date.now() - start
+          > timeout
         ) {
-
           resolve(false);
-
           return;
         }
-
 
         requestAnimationFrame(
           check
         );
       }
 
-
       check();
-
     }
   );
 }
 
 
 /* =========================================================
- QR SCANNER
+ SCAN
 ========================================================= */
+
+function showScanButton(){
+  document
+    .getElementById('scanBtn')
+    .classList
+    .remove('hidden');
+
+  document
+    .getElementById('scanStatus')
+    .textContent =
+    'แตะเปิดกล้องสแกน QR';
+}
+
+
+function setScanError(message){
+  const status =
+    document
+      .getElementById('scanStatus');
+
+  status.className =
+    'status error';
+
+  status.textContent =
+    message;
+
+  showScanButton();
+}
+
 
 async function startScanner(
   silent=false
 ){
-
   const button =
-    document.getElementById(
-      'scanBtn'
-    );
+    document
+      .getElementById('scanBtn');
 
+  button.disabled = true;
 
   const status =
-    document.getElementById(
-      'scanStatus'
-    );
-
-
-  button.disabled =
-    true;
-
+    document
+      .getElementById('scanStatus');
 
   status.className =
     'status';
 
-
   status.textContent =
     'กำลังเปิดกล้องหลัง...';
 
-
   await stopScanner();
 
-
-  qrFound =
-    false;
-
-
-  const video =
-    document.getElementById(
-      'scanVideo'
-    );
-
-
   try {
-
     if (
-      !navigator.mediaDevices
-      ||
-      !navigator.mediaDevices
-        .getUserMedia
+      !navigator.mediaDevices ||
+      !navigator.mediaDevices.getUserMedia
     ) {
-
       throw new Error(
-        'Browser ไม่รองรับ Camera'
+        'Browser นี้ไม่รองรับ Camera'
       );
-
     }
 
-
     try {
-
       scanStream =
         await getMedia({
-
           audio:false,
-
           video:{
-            facingMode:
-              'environment',
-
+            facingMode:{
+              ideal:'environment'
+            },
             width:{
               ideal:1280
             },
-
             height:{
               ideal:720
             }
-
           }
-
         });
 
-
-    } catch (firstError) {
-
-      /*
-       * fallback
-       */
+    } catch(firstError) {
       scanStream =
         await getMedia({
-
           audio:false,
           video:true
-
         });
-
     }
 
+    rememberPermission();
 
-    rememberCameraPermission();
-
+    const video =
+      document
+        .getElementById('scanVideo');
 
     video.srcObject =
       scanStream;
 
-
-    video.muted =
-      true;
-
-
-    video.playsInline =
-      true;
-
+    video.muted = true;
+    video.playsInline = true;
 
     await video.play();
 
-
-    let ready =
+    const ready =
       await waitVideo(
         video,
         5000
       );
 
-
     if (!ready) {
-
-      const stream =
-        scanStream;
-
-
-      try {
-        video.pause();
-      } catch (_) {}
-
-
-      video.srcObject =
-        null;
-
-
-      await sleep(
-        300
-      );
-
-
-      video.srcObject =
-        stream;
-
-
-      await video.play();
-
-
-      ready =
-        await waitVideo(
-          video,
-          5000
-        );
-
-    }
-
-
-    if (!ready) {
-
       throw new Error(
-        'กล้องเปิดแล้วแต่ไม่มีภาพ'
+        'กล้องเปิดแล้วแต่ยังไม่มีภาพ'
       );
-
     }
 
+    document
+      .getElementById('scanPlaceholder')
+      .classList
+      .add('hidden');
 
     document
-      .getElementById(
-        'scanPlaceholder'
-      )
-      .classList.add(
-        'hidden'
-      );
+      .getElementById('scanFrame')
+      .classList
+      .remove('hidden');
 
+    button.classList.add('hidden');
 
-    document
-      .getElementById(
-        'scanFrame'
-      )
-      .classList.remove(
-        'hidden'
-      );
-
+    button.disabled = false;
 
     status.className =
       'status ok';
 
-
     status.textContent =
       'นำ QR เข้าในกรอบ';
 
-
-    document
-      .getElementById(
-        'scanInfo'
-      )
-      .textContent =
-      'Camera ready • '
-      +
-      video.videoWidth
-      +
-      ' × '
-      +
-      video.videoHeight;
-
-
-    button.classList.add(
-      'hidden'
-    );
-
-
-    button.disabled =
-      false;
-
-
-    scanning =
-      true;
-
-
-    lastScanTime =
-      0;
-
+    scanning = true;
+    qrFound = false;
+    lastScanTime = 0;
 
     scanLoop();
 
-
     return true;
 
-
-  } catch (error) {
-
+  } catch(error) {
     await stopScanner();
 
+    button.disabled = false;
 
-    status.className =
-      'status error';
-
-
-    status.textContent =
-      'ยังไม่สามารถเปิดกล้องได้';
-
-
-    button.disabled =
-      false;
-
-
-    button.classList.remove(
-      'hidden'
+    setScanError(
+      'เปิดกล้องไม่สำเร็จ'
     );
 
-
     if (!silent) {
-
       alert(
         'เปิดกล้องไม่ได้\n\n'
         +
@@ -1250,84 +792,56 @@ async function startScanner(
           ||
           error
         )
-        +
-        '\n\nหากเป็นครั้งแรก กรุณาเลือก อนุญาต Camera'
       );
-
     }
 
-
     return false;
-
   }
 }
 
 
-function scanLoop(
-  timestamp=0
-){
-
+function scanLoop(timestamp=0){
   if (
-    !scanning
-    ||
+    !scanning ||
     qrFound
   ) {
     return;
   }
-
 
   scanLoopId =
     requestAnimationFrame(
       scanLoop
     );
 
-
-  /*
-   * ลด CPU
-   */
   if (
-    timestamp
-    -
-    lastScanTime
-    <
-    160
+    timestamp - lastScanTime
+    < 180
   ) {
     return;
   }
 
-
   lastScanTime =
     timestamp;
 
-
   const video =
-    document.getElementById(
-      'scanVideo'
-    );
-
+    document
+      .getElementById('scanVideo');
 
   if (
-    !video.videoWidth
-    ||
+    !video.videoWidth ||
     video.readyState < 2
   ) {
     return;
   }
 
-
-  decodeQr(
-    video
-  );
+  decodeQr(video);
 }
 
 
 function decodeQr(video){
-
   const canvas =
-    document.getElementById(
-      'scanCanvas'
-    );
-
+    document
+      .getElementById('scanCanvas');
 
   const ctx =
     canvas.getContext(
@@ -1337,10 +851,8 @@ function decodeQr(video){
       }
     );
 
-
   const maxWidth =
-    640;
-
+    560;
 
   const scale =
     Math.min(
@@ -1349,7 +861,6 @@ function decodeQr(video){
       /
       video.videoWidth
     );
-
 
   const width =
     Math.max(
@@ -1361,7 +872,6 @@ function decodeQr(video){
       )
     );
 
-
   const height =
     Math.max(
       1,
@@ -1372,14 +882,11 @@ function decodeQr(video){
       )
     );
 
-
   canvas.width =
     width;
 
-
   canvas.height =
     height;
-
 
   ctx.drawImage(
     video,
@@ -1389,7 +896,6 @@ function decodeQr(video){
     height
   );
 
-
   const image =
     ctx.getImageData(
       0,
@@ -1397,7 +903,6 @@ function decodeQr(video){
       width,
       height
     );
-
 
   const result =
     jsQR(
@@ -1410,66 +915,46 @@ function decodeQr(video){
       }
     );
 
-
   if (
-    result
-    &&
+    result &&
     result.data
   ) {
-
     handleQr(
       result.data
     );
-
   }
 }
 
 
 async function handleQr(value){
-
   if (qrFound) {
     return;
   }
 
-
   value =
-    String(
-      value || ''
-    ).trim();
-
+    String(value || '')
+      .trim();
 
   if (!value) {
     return;
   }
 
-
-  qrFound =
-    true;
-
-
-  scanning =
-    false;
-
+  qrFound = true;
+  scanning = false;
 
   const status =
-    document.getElementById(
-      'scanStatus'
-    );
-
+    document
+      .getElementById('scanStatus');
 
   status.className =
     'status ok';
 
-
   status.textContent =
-    'อ่าน QR สำเร็จ กำลังกลับระบบพกสุข...';
-
+    'อ่าน QR สำเร็จ';
 
   await stopScanner();
 
-
   postBack({
-
     mode:
       APP_MODE,
 
@@ -1481,36 +966,22 @@ async function handleQr(value){
 
     cameraValue:
       value
-
   });
 }
 
 
 async function stopScanner(){
+  scanning = false;
 
-  scanning =
-    false;
-
-
-  if (
-    scanLoopId
-  ) {
-
+  if (scanLoopId) {
     cancelAnimationFrame(
       scanLoopId
     );
 
-
-    scanLoopId =
-      null;
-
+    scanLoopId = null;
   }
 
-
-  if (
-    scanStream
-  ) {
-
+  if (scanStream) {
     scanStream
       .getTracks()
       .forEach(
@@ -1518,29 +989,19 @@ async function stopScanner(){
           track.stop()
       );
 
-
-    scanStream =
-      null;
-
+    scanStream = null;
   }
 
-
   const video =
-    document.getElementById(
-      'scanVideo'
-    );
-
+    document
+      .getElementById('scanVideo');
 
   if (video) {
-
     try {
       video.pause();
-    } catch (_) {}
+    } catch(error) {}
 
-
-    video.srcObject =
-      null;
-
+    video.srcObject = null;
   }
 }
 
@@ -1549,200 +1010,141 @@ async function stopScanner(){
  PHOTO
 ========================================================= */
 
+function showPhotoButton(){
+  document
+    .getElementById('openPhotoBtn')
+    .classList
+    .remove('hidden');
+
+  document
+    .getElementById('photoStatus')
+    .textContent =
+    'แตะเพื่อเปิดกล้องหน้า';
+}
+
+
 async function startPhoto(
   silent=false
 ){
-
   const button =
-    document.getElementById(
-      'openPhotoBtn'
-    );
+    document
+      .getElementById('openPhotoBtn');
 
+  button.disabled = true;
 
-  button.disabled =
-    true;
+  const status =
+    document
+      .getElementById('photoStatus');
 
+  status.className =
+    'status';
 
-  document
-    .getElementById(
-      'photoInfo'
-    )
-    .textContent =
+  status.textContent =
     'กำลังเปิดกล้องหน้า...';
-
 
   await stopPhoto();
 
-
-  const video =
-    document.getElementById(
-      'photoVideo'
-    );
-
-
   try {
-
-    try {
-
-      photoStream =
-        await getMedia({
-
-          audio:false,
-
-          video:{
-            facingMode:
-              'user',
-
-            width:{
-              ideal:720
-            },
-
-            height:{
-              ideal:960
-            }
-
-          }
-
-        });
-
-
-    } catch (firstError) {
-
-      photoStream =
-        await getMedia({
-
-          audio:false,
-          video:true
-
-        });
-
+    if (
+      !navigator.mediaDevices ||
+      !navigator.mediaDevices.getUserMedia
+    ) {
+      throw new Error(
+        'Browser นี้ไม่รองรับ Camera'
+      );
     }
 
+    try {
+      photoStream =
+        await getMedia({
+          audio:false,
+          video:{
+            facingMode:{
+              ideal:'user'
+            },
+            width:{
+              ideal:640
+            },
+            height:{
+              ideal:854
+            }
+          }
+        });
 
-    rememberCameraPermission();
+    } catch(firstError) {
+      photoStream =
+        await getMedia({
+          audio:false,
+          video:true
+        });
+    }
 
+    rememberPermission();
+
+    const video =
+      document
+        .getElementById('photoVideo');
 
     video.srcObject =
       photoStream;
 
-
-    video.muted =
-      true;
-
-
-    video.playsInline =
-      true;
-
+    video.muted = true;
+    video.playsInline = true;
 
     await video.play();
 
-
-    let ready =
+    const ready =
       await waitVideo(
         video,
         5000
       );
 
-
     if (!ready) {
-
-      const stream =
-        photoStream;
-
-
-      video.srcObject =
-        null;
-
-
-      await sleep(
-        300
-      );
-
-
-      video.srcObject =
-        stream;
-
-
-      await video.play();
-
-
-      ready =
-        await waitVideo(
-          video,
-          5000
-        );
-
-    }
-
-
-    if (!ready) {
-
       throw new Error(
-        'กล้องเปิดแล้วแต่ไม่มีภาพ'
+        'กล้องเปิดแล้วแต่ยังไม่มีภาพ'
       );
-
     }
 
+    document
+      .getElementById('photoPlaceholder')
+      .classList
+      .add('hidden');
 
     document
-      .getElementById(
-        'photoPlaceholder'
-      )
-      .classList.add(
-        'hidden'
-      );
+      .getElementById('face')
+      .classList
+      .remove('hidden');
 
+    button.classList.add('hidden');
 
-    document
-      .getElementById(
-        'face'
-      )
-      .classList.remove(
-        'hidden'
-      );
-
-
-    button.classList.add(
-      'hidden'
-    );
-
+    button.disabled = false;
 
     document
-      .getElementById(
-        'captureBtn'
-      )
-      .classList.remove(
-        'hidden'
-      );
+      .getElementById('captureBtn')
+      .classList
+      .remove('hidden');
 
+    status.className =
+      'status ok';
 
-    document
-      .getElementById(
-        'photoInfo'
-      )
-      .textContent =
-      'Camera ready';
-
+    status.textContent =
+      'กล้องพร้อม ถ่ายภาพได้เลย';
 
     return true;
 
-
-  } catch (error) {
-
+  } catch(error) {
     await stopPhoto();
 
+    button.disabled = false;
+    button.classList.remove('hidden');
 
-    button.disabled =
-      false;
+    status.className =
+      'status error';
 
-
-    button.classList.remove(
-      'hidden'
-    );
-
+    status.textContent =
+      'เปิดกล้องไม่สำเร็จ';
 
     if (!silent) {
-
       alert(
         'เปิดกล้องไม่ได้\n\n'
         +
@@ -1752,22 +1154,15 @@ async function startPhoto(
           error
         )
       );
-
     }
 
-
     return false;
-
   }
 }
 
 
 async function stopPhoto(){
-
-  if (
-    photoStream
-  ) {
-
+  if (photoStream) {
     photoStream
       .getTracks()
       .forEach(
@@ -1775,45 +1170,29 @@ async function stopPhoto(){
           track.stop()
       );
 
-
-    photoStream =
-      null;
-
+    photoStream = null;
   }
 
-
   const video =
-    document.getElementById(
-      'photoVideo'
-    );
-
+    document
+      .getElementById('photoVideo');
 
   if (video) {
-
     try {
       video.pause();
-    } catch (_) {}
+    } catch(error) {}
 
-
-    video.srcObject =
-      null;
-
+    video.srcObject = null;
   }
 }
 
 
 async function capturePhoto(){
-
   const video =
-    document.getElementById(
-      'photoVideo'
-    );
+    document
+      .getElementById('photoVideo');
 
-
-  if (
-    !video.videoWidth
-  ) {
-
+  if (!video.videoWidth) {
     alert(
       'กล้องยังไม่พร้อม'
     );
@@ -1821,18 +1200,14 @@ async function capturePhoto(){
     return;
   }
 
-
   /*
-   * เล็กลงเพื่อส่งเร็ว
-   * และเหมาะกับ PDF thumbnail
+   * เล็กและเร็ว
    */
   const maxSide =
-    420;
-
+    400;
 
   const quality =
-    .25;
-
+    .24;
 
   const scale =
     Math.min(
@@ -1845,12 +1220,10 @@ async function capturePhoto(){
       )
     );
 
-
   const canvas =
     document.createElement(
       'canvas'
     );
-
 
   canvas.width =
     Math.max(
@@ -1862,7 +1235,6 @@ async function capturePhoto(){
       )
     );
 
-
   canvas.height =
     Math.max(
       1,
@@ -1872,7 +1244,6 @@ async function capturePhoto(){
         scale
       )
     );
-
 
   canvas
     .getContext(
@@ -1889,161 +1260,103 @@ async function capturePhoto(){
       canvas.height
     );
 
-
   photoData =
     canvas.toDataURL(
       'image/webp',
       quality
     );
 
-
   if (
     !photoData.startsWith(
       'data:image/webp'
     )
   ) {
-
     photoData =
       canvas.toDataURL(
         'image/jpeg',
         quality
       );
-
   }
-
 
   await stopPhoto();
 
-
   const preview =
-    document.getElementById(
-      'preview'
-    );
-
+    document
+      .getElementById('preview');
 
   preview.src =
     photoData;
 
-
-  preview.classList.remove(
-    'hidden'
-  );
-
+  preview
+    .classList
+    .remove('hidden');
 
   document
-    .getElementById(
-      'face'
-    )
-    .classList.add(
-      'hidden'
-    );
-
+    .getElementById('photoPlaceholder')
+    .classList
+    .add('hidden');
 
   document
-    .getElementById(
-      'captureBtn'
-    )
-    .classList.add(
-      'hidden'
-    );
-
+    .getElementById('face')
+    .classList
+    .add('hidden');
 
   document
-    .getElementById(
-      'useBtn'
-    )
-    .classList.remove(
-      'hidden'
-    );
-
+    .getElementById('captureBtn')
+    .classList
+    .add('hidden');
 
   document
-    .getElementById(
-      'retakeBtn'
-    )
-    .classList.remove(
-      'hidden'
-    );
+    .getElementById('useBtn')
+    .classList
+    .remove('hidden');
+
+  document
+    .getElementById('retakeBtn')
+    .classList
+    .remove('hidden');
+
+  document
+    .getElementById('photoStatus')
+    .textContent =
+    'ตรวจสอบภาพก่อนยืนยัน';
 }
 
 
-function retakePhoto(){
-
-  photoData =
-    '';
-
+async function retakePhoto(){
+  photoData = '';
 
   document
-    .getElementById(
-      'preview'
-    )
-    .classList.add(
-      'hidden'
-    );
-
+    .getElementById('preview')
+    .classList
+    .add('hidden');
 
   document
-    .getElementById(
-      'useBtn'
-    )
-    .classList.add(
-      'hidden'
-    );
-
+    .getElementById('useBtn')
+    .classList
+    .add('hidden');
 
   document
-    .getElementById(
-      'retakeBtn'
-    )
-    .classList.add(
-      'hidden'
-    );
-
+    .getElementById('retakeBtn')
+    .classList
+    .add('hidden');
 
   document
-    .getElementById(
-      'openPhotoBtn'
-    )
-    .classList.remove(
-      'hidden'
-    );
+    .getElementById('photoPlaceholder')
+    .classList
+    .remove('hidden');
 
+  const ok =
+    await startPhoto(true);
 
-  document
-    .getElementById(
-      'openPhotoBtn'
-    )
-    .disabled =
-    false;
-
-
-  document
-    .getElementById(
-      'photoPlaceholder'
-    )
-    .classList.remove(
-      'hidden'
-    );
-
-
-  /*
-   * เพราะเคยอนุญาตแล้ว
-   * ลองเปิดกล้องใหม่ทันที
-   */
-  if (
-    hasRememberedCameraPermission()
-  ) {
-
-    startPhoto(true);
-
+  if (!ok) {
+    showPhotoButton();
   }
 }
 
 
 function sendPhoto(){
-
   if (!photoData) {
-
     alert(
       'ยังไม่ได้ถ่ายภาพ'
     );
@@ -2051,9 +1364,17 @@ function sendPhoto(){
     return;
   }
 
+  document
+    .getElementById('useBtn')
+    .disabled =
+    true;
+
+  document
+    .getElementById('photoStatus')
+    .textContent =
+    'กำลังกลับเข้าสู่ระบบพกสุข...';
 
   postBack({
-
     mode:
       APP_MODE,
 
@@ -2065,83 +1386,62 @@ function sendPhoto(){
 
     cameraData:
       photoData
-
   });
 }
 
 
 /* =========================================================
- POST BACK
+ RETURN TO APPS SCRIPT
 ========================================================= */
 
 function postBack(fields){
-
   const form =
     document.createElement(
       'form'
     );
 
-
   form.method =
     'POST';
-
 
   form.action =
     RETURN_URL;
 
-
   form.target =
     '_self';
 
-
   Object.keys(fields)
     .forEach(key => {
-
       const input =
         document.createElement(
           'input'
         );
 
-
       input.type =
         'hidden';
-
 
       input.name =
         key;
 
-
       input.value =
         fields[key];
-
 
       form.appendChild(
         input
       );
-
     });
-
 
   document.body
     .appendChild(form);
-
 
   form.submit();
 }
 
 
-/* =========================================================
- RETURN
-========================================================= */
-
 async function returnHome(){
-
   await stopScanner();
-
   await stopPhoto();
 
-
-  window.location.replace(
+  location.replace(
     RETURN_URL
     +
     '?mode='
@@ -2156,16 +1456,12 @@ async function returnHome(){
 window.addEventListener(
   'pagehide',
   () => {
-
     stopScanner();
-
     stopPhoto();
-
   }
 );
 
 </script>
 
 </body>
-
 </html>
