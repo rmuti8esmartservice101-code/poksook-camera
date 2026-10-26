@@ -15,26 +15,23 @@
   content="#102a34"
 >
 
-<title>
-  พกสุข Camera
-</title>
+<title>พกสุข Camera</title>
 
-
-<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-
+<!-- QR decoder -->
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 
 <style>
 
 :root{
-  --primary:#1c8190;
-  --primary2:#1bb39d;
-  --green:#16a575;
-  --bg:#0d222b;
-  --panel:#163b47;
-  --panel2:#1d4a58;
+  --primary:#188596;
+  --primary2:#19b59e;
+  --success:#15a875;
+  --danger:#e25d64;
+  --bg:#0b2028;
+  --panel:#123945;
+  --panel2:#194a58;
   --text:#ffffff;
-  --muted:#bdd2d9;
-  --line:rgba(255,255,255,.1);
+  --muted:#bfd2d8;
 }
 
 *{
@@ -48,8 +45,8 @@ body{
   background:
     linear-gradient(
       180deg,
-      #102a34 0%,
-      #0b1c23 100%
+      #102d37,
+      #091c23
     );
   color:var(--text);
   font-family:
@@ -65,9 +62,8 @@ body{
   min-height:100vh;
 }
 
-button{
-  font:inherit;
-  cursor:pointer;
+.hidden{
+  display:none!important;
 }
 
 main{
@@ -77,45 +73,38 @@ main{
     18px
     15px
     calc(
-      22px
+      20px
       +
       env(safe-area-inset-bottom)
     );
 }
 
-.hidden{
-  display:none!important;
-}
-
 .brand{
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   gap:10px;
-  margin-top:6px;
+  margin-top:5px;
   font-size:25px;
   font-weight:900;
 }
 
 .logo{
-  width:46px;
-  height:46px;
+  width:48px;
+  height:48px;
   display:grid;
   place-items:center;
-  border-radius:15px;
+  border-radius:16px;
   background:
     linear-gradient(
       135deg,
       var(--primary),
       var(--primary2)
     );
-  box-shadow:
-    0 10px 25px
-    rgba(0,0,0,.2);
 }
 
 .subtitle{
-  margin:10px 0 0;
+  margin-top:10px;
   text-align:center;
   color:var(--muted);
   font-size:15px;
@@ -125,24 +114,157 @@ main{
   margin-top:18px;
   padding:15px;
   background:
-    rgba(22,59,71,.95);
-  border:1px solid var(--line);
-  border-radius:24px;
+    rgba(18,57,69,.96);
+  border:1px solid
+    rgba(255,255,255,.09);
+  border-radius:25px;
   box-shadow:
     0 18px 45px
     rgba(0,0,0,.22);
+}
+
+.scanner-box{
+  position:relative;
+  overflow:hidden;
+  width:100%;
+  background:#000;
+  border-radius:22px;
+  aspect-ratio:3/4;
+}
+
+.scanner-box video{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+}
+
+.scan-overlay{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+
+.scan-frame{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:78%;
+  aspect-ratio:1/1;
+  transform:
+    translate(-50%,-50%);
+}
+
+.corner{
+  position:absolute;
+  width:58px;
+  height:58px;
+}
+
+.corner.tl{
+  left:0;
+  top:0;
+  border-left:6px solid white;
+  border-top:6px solid white;
+}
+
+.corner.tr{
+  right:0;
+  top:0;
+  border-right:6px solid white;
+  border-top:6px solid white;
+}
+
+.corner.bl{
+  left:0;
+  bottom:0;
+  border-left:6px solid white;
+  border-bottom:6px solid white;
+}
+
+.corner.br{
+  right:0;
+  bottom:0;
+  border-right:6px solid white;
+  border-bottom:6px solid white;
+}
+
+.scan-line{
+  position:absolute;
+  left:6%;
+  right:6%;
+  top:50%;
+  height:2px;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #6fffe0,
+      transparent
+    );
+  box-shadow:
+    0 0 13px
+    rgba(111,255,224,.9);
+  animation:
+    scan 2s ease-in-out infinite;
+}
+
+@keyframes scan{
+
+  0%{
+    transform:
+      translateY(-115px);
+  }
+
+  50%{
+    transform:
+      translateY(115px);
+  }
+
+  100%{
+    transform:
+      translateY(-115px);
+  }
+
+}
+
+.status{
+  margin-top:12px;
+  padding:13px;
+  text-align:center;
+  color:var(--muted);
+  background:
+    rgba(255,255,255,.06);
+  border-radius:15px;
+}
+
+.status.success{
+  color:#dffff4;
+  background:
+    rgba(21,168,117,.22);
+}
+
+.status.error{
+  color:#ffd8db;
+  background:
+    rgba(226,93,100,.2);
+}
+
+.tip{
+  margin:11px 5px 0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+  text-align:center;
 }
 
 .btn{
   width:100%;
   min-height:58px;
   margin-top:10px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:9px;
   border:0;
   border-radius:17px;
+  font:inherit;
   font-size:18px;
   font-weight:900;
 }
@@ -159,66 +281,34 @@ main{
 
 .success{
   color:white;
-  background:var(--green);
+  background:var(--success);
 }
 
 .secondary{
-  color:#18323c;
-  background:#e7f0f3;
+  color:#17313c;
+  background:#e8f1f3;
 }
 
-.status{
-  margin-top:12px;
-  padding:12px;
-  text-align:center;
-  color:var(--muted);
-  background:
-    rgba(255,255,255,.06);
-  border-radius:14px;
-}
 
-.status.success{
-  color:#dffbf2;
-  background:
-    rgba(22,165,117,.18);
-}
+/* PHOTO */
 
-.status.error{
-  color:#ffd9dc;
-  background:
-    rgba(227,93,101,.18);
-}
-
-#reader{
-  width:100%;
-  min-height:360px;
-  overflow:hidden;
-  background:#07171d;
-  border-radius:20px;
-}
-
-#reader video{
-  object-fit:cover!important;
-}
-
-.camera{
+.photo-camera{
   position:relative;
   width:100%;
-  max-height:70vh;
   overflow:hidden;
   aspect-ratio:3/4;
-  background:black;
-  border-radius:20px;
+  background:#000;
+  border-radius:22px;
 }
 
-.camera video,
-.camera img{
+.photo-camera video,
+.photo-camera img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
 
-.guide{
+.face-guide{
   position:absolute;
   left:50%;
   top:50%;
@@ -230,21 +320,21 @@ main{
     3px solid
     rgba(255,255,255,.85);
   border-radius:44%;
-  box-shadow:
-    0 0 0 999px
-    rgba(0,0,0,.08);
   pointer-events:none;
 }
 
-.tip{
-  margin-top:11px;
-  color:var(--muted);
+
+/* DEBUG */
+
+.debug{
+  margin-top:8px;
+  color:#94b7c1;
+  font-size:11px;
   text-align:center;
-  font-size:13px;
 }
 
-svg{
-  display:block;
+canvas{
+  display:none;
 }
 
 </style>
@@ -262,8 +352,8 @@ svg{
   <div class="logo">
 
     <svg
-      width="25"
-      height="25"
+      width="26"
+      height="26"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -287,12 +377,45 @@ svg{
 ></div>
 
 
+<!-- ========================================
+     QR SCANNER
+======================================== -->
+
 <section
   id="scannerPage"
   class="card hidden"
 >
 
-  <div id="reader"></div>
+  <div class="scanner-box">
+
+    <video
+      id="scanVideo"
+      autoplay
+      muted
+      playsinline
+    ></video>
+
+
+    <div class="scan-overlay">
+
+      <div class="scan-frame">
+
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+
+        <div class="scan-line"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <canvas id="scanCanvas"></canvas>
+
 
   <div
     id="scanStatus"
@@ -301,16 +424,20 @@ svg{
     กำลังเตรียมกล้อง...
   </div>
 
+
   <div class="tip">
-    นำ QR ให้อยู่กลางภาพและถือให้นิ่งสักครู่
+    ให้ QR อยู่กลางกรอบ • ถือโทรศัพท์ให้นิ่ง •
+    หากสแกนจากหน้าจออื่นให้เพิ่มความสว่างของหน้าจอ
   </div>
+
 
   <button
     class="btn primary"
-    onclick="startScanner()"
+    onclick="restartScanner()"
   >
-    เปิดกล้องสแกน QR
+    เปิดกล้อง / สแกนใหม่
   </button>
+
 
   <button
     class="btn secondary"
@@ -319,18 +446,29 @@ svg{
     ปิด
   </button>
 
+
+  <div
+    id="debugInfo"
+    class="debug"
+  ></div>
+
 </section>
 
+
+
+<!-- ========================================
+     PHOTO
+======================================== -->
 
 <section
   id="photoPage"
   class="card hidden"
 >
 
-  <div class="camera">
+  <div class="photo-camera">
 
     <video
-      id="video"
+      id="photoVideo"
       autoplay
       muted
       playsinline
@@ -341,7 +479,7 @@ svg{
       class="hidden"
     >
 
-    <div class="guide"></div>
+    <div class="face-guide"></div>
 
   </div>
 
@@ -354,6 +492,7 @@ svg{
     ถ่ายภาพ
   </button>
 
+
   <button
     id="useButton"
     class="btn success hidden"
@@ -362,6 +501,7 @@ svg{
     ใช้ภาพนี้
   </button>
 
+
   <button
     id="retakeButton"
     class="btn secondary hidden"
@@ -369,6 +509,7 @@ svg{
   >
     ถ่ายใหม่
   </button>
+
 
   <button
     class="btn secondary"
@@ -386,7 +527,7 @@ svg{
 <script>
 
 /* ======================================================
- PARAMETERS
+ PARAMETER
 ====================================================== */
 
 const params =
@@ -419,22 +560,6 @@ let PARENT_ORIGIN =
   '';
 
 
-let scanner =
-  null;
-
-
-let stream =
-  null;
-
-
-let capturedPhoto =
-  '';
-
-
-let QR_LOCK =
-  false;
-
-
 try{
 
   const parsed =
@@ -454,6 +579,38 @@ try{
   }
 
 }catch(_){}
+
+
+/* ======================================================
+ STATE
+====================================================== */
+
+let scanStream =
+  null;
+
+
+let photoStream =
+  null;
+
+
+let capturedPhoto =
+  '';
+
+
+let scanning =
+  false;
+
+
+let scanLoopId =
+  null;
+
+
+let qrFound =
+  false;
+
+
+let lastScanAt =
+  0;
 
 
 /* ======================================================
@@ -491,6 +648,20 @@ async function init(){
 
 
   if (
+    typeof jsQR
+    !== 'function'
+  ){
+
+    alert(
+      'โหลดระบบอ่าน QR ไม่สำเร็จ กรุณาตรวจสอบอินเทอร์เน็ตแล้วเปิดใหม่'
+    );
+
+    return;
+
+  }
+
+
+  if (
     MODE === 'photo'
   ){
 
@@ -498,8 +669,7 @@ async function init(){
       .getElementById(
         'photoPage'
       )
-      .classList
-      .remove(
+      .classList.remove(
         'hidden'
       );
 
@@ -523,8 +693,7 @@ async function init(){
     .getElementById(
       'scannerPage'
     )
-    .classList
-    .remove(
+    .classList.remove(
       'hidden'
     );
 
@@ -543,22 +712,13 @@ async function init(){
 
 
 /* ======================================================
- POST BACK
+ POST MESSAGE
 ====================================================== */
 
 function postBack(
   type,
   payload
 ){
-
-  if (!PARENT_ORIGIN){
-
-    throw new Error(
-      'ไม่พบ Parent Origin'
-    );
-
-  }
-
 
   if (!window.opener){
 
@@ -569,7 +729,17 @@ function postBack(
   }
 
 
-  const message =
+  if (!PARENT_ORIGIN){
+
+    throw new Error(
+      'ไม่พบ Parent Origin'
+    );
+
+  }
+
+
+  window.opener.postMessage(
+
     Object.assign(
       {
 
@@ -583,97 +753,518 @@ function postBack(
           type
 
       },
+
       payload || {}
-    );
 
+    ),
 
-  console.log(
-    'POST TO PARENT:',
-    message,
     PARENT_ORIGIN
-  );
 
-
-  window.opener.postMessage(
-    message,
-    PARENT_ORIGIN
   );
 
 }
 
 
 /* ======================================================
- SCANNER CLEANUP
+ QR CAMERA
 ====================================================== */
 
-async function clearScanner(){
+async function startScanner(){
 
-  if (!scanner){
+  await stopScanner();
 
-    return;
 
-  }
+  const status =
+    document.getElementById(
+      'scanStatus'
+    );
+
+
+  const video =
+    document.getElementById(
+      'scanVideo'
+    );
+
+
+  status.className =
+    'status';
+
+
+  status.textContent =
+    'กำลังเปิดกล้องหลัง...';
+
+
+  qrFound =
+    false;
 
 
   try{
 
     if (
-      scanner.isScanning
+      !navigator.mediaDevices
+      ||
+      !navigator.mediaDevices.getUserMedia
     ){
 
-      await scanner.stop();
+      throw new Error(
+        'Browser นี้ไม่รองรับ Camera API'
+      );
 
     }
 
+
+    /*
+      ใช้ browser camera API ตรง
+      ไม่ผ่าน html5-qrcode
+    */
+    scanStream =
+      await navigator
+        .mediaDevices
+        .getUserMedia({
+
+          audio:false,
+
+          video:{
+
+            facingMode:
+              {
+                ideal:
+                  'environment'
+              },
+
+            width:{
+              ideal:1920
+            },
+
+            height:{
+              ideal:1080
+            },
+
+            frameRate:{
+              ideal:30,
+              max:30
+            }
+
+          }
+
+        });
+
+
+    video.srcObject =
+      scanStream;
+
+
+    await video.play();
+
+
+    await waitForVideo(
+      video
+    );
+
+
+    scanning =
+      true;
+
+
+    status.textContent =
+      'นำ QR เข้าในกรอบ';
+
+
+    document
+      .getElementById(
+        'debugInfo'
+      )
+      .textContent =
+      'Scanner ready • '
+      +
+      video.videoWidth
+      +
+      ' × '
+      +
+      video.videoHeight;
+
+
+    scanLoop();
+
+
   }catch(error){
 
-    console.warn(
-      'scanner stop:',
+    console.error(
       error
+    );
+
+
+    status.className =
+      'status error';
+
+
+    status.textContent =
+      'เปิดกล้องไม่สำเร็จ';
+
+
+    alert(
+      'เปิดกล้องไม่ได้\n\n'
+      +
+      (
+        error.message
+        ||
+        error
+      )
+      +
+      '\n\nกรุณาอนุญาต Camera ใน Browser'
     );
 
   }
 
-
-  try{
-
-    await scanner.clear();
-
-  }catch(error){
-
-    console.warn(
-      'scanner clear:',
-      error
-    );
-
-  }
+}
 
 
-  scanner =
-    null;
+function waitForVideo(video){
+
+  return new Promise(
+    resolve => {
+
+      if (
+        video.readyState >= 2
+        &&
+        video.videoWidth > 0
+      ){
+
+        resolve();
+
+        return;
+
+      }
+
+
+      const check =
+        () => {
+
+          if (
+            video.videoWidth > 0
+            &&
+            video.videoHeight > 0
+          ){
+
+            resolve();
+
+            return;
+
+          }
+
+
+          requestAnimationFrame(
+            check
+          );
+
+        };
+
+
+      check();
+
+    }
+  );
 
 }
 
 
 /* ======================================================
- QR SUCCESS HANDLER
+ QR SCAN LOOP
 ====================================================== */
 
-async function handleQrSuccess(
-  decodedText
-){
+function scanLoop(timestamp=0){
 
-  if (QR_LOCK){
+  if (
+    !scanning
+    ||
+    qrFound
+  ){
 
     return;
 
   }
 
 
-  const value =
+  scanLoopId =
+    requestAnimationFrame(
+      scanLoop
+    );
+
+
+  /*
+    อ่านประมาณ 8 ครั้ง / วินาที
+  */
+  if (
+    timestamp - lastScanAt
+    <
+    120
+  ){
+
+    return;
+
+  }
+
+
+  lastScanAt =
+    timestamp;
+
+
+  const video =
+    document.getElementById(
+      'scanVideo'
+    );
+
+
+  if (
+    !video
+    ||
+    video.readyState < 2
+    ||
+    !video.videoWidth
+  ){
+
+    return;
+
+  }
+
+
+  try{
+
+    decodeVideoFrame(
+      video
+    );
+
+  }catch(error){
+
+    console.warn(
+      'decode:',
+      error
+    );
+
+  }
+
+}
+
+
+/* ======================================================
+ DECODE FRAME
+====================================================== */
+
+function decodeVideoFrame(
+  video
+){
+
+  const canvas =
+    document.getElementById(
+      'scanCanvas'
+    );
+
+
+  const context =
+    canvas.getContext(
+      '2d',
+      {
+        willReadFrequently:true
+      }
+    );
+
+
+  /*
+    จำกัดขนาดภาพสำหรับ performance
+  */
+  const MAX_WIDTH =
+    900;
+
+
+  const ratio =
+    Math.min(
+      1,
+      MAX_WIDTH /
+      video.videoWidth
+    );
+
+
+  const width =
+    Math.max(
+      1,
+      Math.round(
+        video.videoWidth
+        *
+        ratio
+      )
+    );
+
+
+  const height =
+    Math.max(
+      1,
+      Math.round(
+        video.videoHeight
+        *
+        ratio
+      )
+    );
+
+
+  canvas.width =
+    width;
+
+
+  canvas.height =
+    height;
+
+
+  context.drawImage(
+    video,
+    0,
+    0,
+    width,
+    height
+  );
+
+
+  /*
+    รอบแรก:
+    อ่านทั้งภาพ
+  */
+  const image =
+    context.getImageData(
+      0,
+      0,
+      width,
+      height
+    );
+
+
+  let result =
+    jsQR(
+      image.data,
+      width,
+      height,
+      {
+        inversionAttempts:
+          'attemptBoth'
+      }
+    );
+
+
+  if (
+    result &&
+    result.data
+  ){
+
+    handleQrFound(
+      result.data
+    );
+
+    return;
+
+  }
+
+
+  /*
+    รอบสอง:
+    crop กลางภาพ
+    ช่วยกรณี QR อยู่กลางกรอบ
+  */
+  const cropSize =
+    Math.floor(
+      Math.min(
+        width,
+        height
+      )
+      *
+      .82
+    );
+
+
+  const sx =
+    Math.max(
+      0,
+      Math.floor(
+        (
+          width
+          -
+          cropSize
+        )
+        /
+        2
+      )
+    );
+
+
+  const sy =
+    Math.max(
+      0,
+      Math.floor(
+        (
+          height
+          -
+          cropSize
+        )
+        /
+        2
+      )
+    );
+
+
+  const crop =
+    context.getImageData(
+      sx,
+      sy,
+      cropSize,
+      cropSize
+    );
+
+
+  result =
+    jsQR(
+      crop.data,
+      cropSize,
+      cropSize,
+      {
+        inversionAttempts:
+          'attemptBoth'
+      }
+    );
+
+
+  if (
+    result &&
+    result.data
+  ){
+
+    handleQrFound(
+      result.data
+    );
+
+  }
+
+}
+
+
+/* ======================================================
+ QR FOUND
+====================================================== */
+
+async function handleQrFound(
+  value
+){
+
+  if (
+    qrFound
+  ){
+
+    return;
+
+  }
+
+
+  value =
     String(
-      decodedText || ''
-    ).trim();
+      value || ''
+    )
+    .trim();
 
 
   if (!value){
@@ -683,8 +1274,12 @@ async function handleQrSuccess(
   }
 
 
-  QR_LOCK =
+  qrFound =
     true;
+
+
+  scanning =
+    false;
 
 
   const status =
@@ -693,22 +1288,30 @@ async function handleQrSuccess(
     );
 
 
-  status.textContent =
-    'อ่าน QR สำเร็จ กำลังเปิดข้อมูลสมาชิก...';
-
-
   status.className =
     'status success';
 
 
-  console.log(
-    'QR RESULT:',
-    value
-  );
+  status.textContent =
+    'อ่าน QR สำเร็จ กำลังเปิดข้อมูลสมาชิก...';
+
+
+  if (
+    navigator.vibrate
+  ){
+
+    navigator.vibrate(
+      120
+    );
+
+  }
 
 
   try{
 
+    /*
+      ส่งกลับ Apps Script
+    */
     postBack(
       'QR_RESULT',
       {
@@ -717,28 +1320,27 @@ async function handleQrSuccess(
       }
     );
 
+
   }catch(error){
 
-    console.error(
-      'POST BACK FAILED:',
-      error
-    );
-
-
-    QR_LOCK =
+    qrFound =
       false;
 
 
-    status.textContent =
-      'อ่าน QR ได้ แต่ส่งข้อมูลกลับระบบไม่สำเร็จ';
+    scanning =
+      true;
 
 
     status.className =
       'status error';
 
 
+    status.textContent =
+      'อ่าน QR ได้ แต่ส่งกลับระบบไม่สำเร็จ';
+
+
     alert(
-      'อ่าน QR ได้แล้ว แต่ส่งข้อมูลกลับระบบพกสุขไม่สำเร็จ\n\n'
+      'อ่าน QR สำเร็จแล้ว แต่ส่งข้อมูลกลับระบบพกสุขไม่ได้\n\n'
       +
       (
         error.message
@@ -748,35 +1350,21 @@ async function handleQrSuccess(
     );
 
 
+    scanLoop();
+
     return;
 
   }
 
 
-  try{
-
-    if (
-      scanner
-      &&
-      scanner.isScanning
-    ){
-
-      await scanner.stop();
-
-    }
-
-  }catch(error){
-
-    console.warn(
-      'STOP AFTER SCAN:',
-      error
-    );
-
-  }
+  /*
+    ปิดกล้อง
+  */
+  await stopScanner();
 
 
   /*
-    รอให้ postMessage ถูกส่งก่อนปิดหน้า
+    ให้ postMessage มีเวลาส่งก่อน window.close()
   */
   setTimeout(
     () => {
@@ -788,301 +1376,78 @@ async function handleQrSuccess(
       }catch(_){}
 
     },
-    900
+    1100
   );
 
 }
 
 
 /* ======================================================
- QR SCANNER
+ STOP / RESTART SCANNER
 ====================================================== */
 
-async function startScanner(){
+async function stopScanner(){
 
-  const status =
-    document.getElementById(
-      'scanStatus'
-    );
-
-
-  QR_LOCK =
+  scanning =
     false;
 
 
-  status.className =
-    'status';
+  if (
+    scanLoopId
+  ){
 
-
-  status.textContent =
-    'กำลังเปิดกล้อง...';
-
-
-  await clearScanner();
-
-
-  const config = {
-
-    fps:
-      12,
-
-    /*
-      ปรับพื้นที่อ่านตามขนาดจอ
-      ช่วย iPhone/iPad อ่าน QR บนหน้าจอได้ดีขึ้น
-    */
-    qrbox:
-      function(
-        viewfinderWidth,
-        viewfinderHeight
-      ){
-
-        const minEdge =
-          Math.min(
-            viewfinderWidth,
-            viewfinderHeight
-          );
-
-
-        const size =
-          Math.floor(
-            minEdge
-            *
-            0.84
-          );
-
-
-        return {
-          width:size,
-          height:size
-        };
-
-      },
-
-    /*
-      ไม่บังคับ ratio แคบเกินไป
-    */
-    aspectRatio:
-      1,
-
-    disableFlip:
-      false
-
-  };
-
-
-  const successCallback =
-    async decodedText => {
-
-      await handleQrSuccess(
-        decodedText
-      );
-
-    };
-
-
-  const failureCallback =
-    () => {
-
-      /*
-        ไม่ต้องแสดง error
-        เพราะ callback นี้เกิดทุก frame ที่อ่านไม่ได้
-      */
-
-    };
-
-
-  try{
-
-    /*
-      iPhone / Android วิธีหลัก
-    */
-    scanner =
-      new Html5Qrcode(
-        'reader',
-        {
-
-          formatsToSupport:[
-            Html5QrcodeSupportedFormats.QR_CODE
-          ],
-
-          experimentalFeatures:{
-            useBarCodeDetectorIfSupported:false
-          },
-
-          verbose:false
-
-        }
-      );
-
-
-    await scanner.start(
-
-      {
-        facingMode:
-          'environment'
-      },
-
-      config,
-
-      successCallback,
-
-      failureCallback
-
+    cancelAnimationFrame(
+      scanLoopId
     );
 
 
-    status.textContent =
-      'นำ QR เข้าในกรอบ';
-
-
-  }catch(firstError){
-
-    console.warn(
-      'PRIMARY CAMERA FAILED:',
-      firstError
-    );
-
-
-    /*
-      fallback สำหรับบาง iPhone / iPad
-    */
-    try{
-
-      await clearScanner();
-
-
-      status.textContent =
-        'กำลังเลือกกล้องหลัง...';
-
-
-      const cameras =
-        await Html5Qrcode
-          .getCameras();
-
-
-      if (
-        !cameras
-        ||
-        !cameras.length
-      ){
-
-        throw new Error(
-          'ไม่พบกล้องในอุปกรณ์'
-        );
-
-      }
-
-
-      console.log(
-        'CAMERAS:',
-        cameras
-      );
-
-
-      let selected =
-        cameras.find(
-          camera => {
-
-            const label =
-              String(
-                camera.label
-                ||
-                ''
-              )
-              .toLowerCase();
-
-
-            return (
-              label.includes('back')
-              ||
-              label.includes('rear')
-              ||
-              label.includes('environment')
-              ||
-              label.includes('wide')
-            );
-
-          }
-        );
-
-
-      if (!selected){
-
-        selected =
-          cameras[
-            cameras.length - 1
-          ];
-
-      }
-
-
-      scanner =
-        new Html5Qrcode(
-          'reader',
-          {
-
-            formatsToSupport:[
-              Html5QrcodeSupportedFormats.QR_CODE
-            ],
-
-            experimentalFeatures:{
-              useBarCodeDetectorIfSupported:false
-            },
-
-            verbose:false
-
-          }
-        );
-
-
-      await scanner.start(
-
-        selected.id,
-
-        config,
-
-        successCallback,
-
-        failureCallback
-
-      );
-
-
-      status.textContent =
-        'นำ QR เข้าในกรอบ';
-
-
-    }catch(error){
-
-      console.error(
-        'SCANNER FAILED:',
-        error
-      );
-
-
-      status.textContent =
-        'เปิดระบบสแกนไม่สำเร็จ';
-
-
-      status.className =
-        'status error';
-
-
-      alert(
-        'ไม่สามารถเปิดระบบสแกน QR ได้\n\n'
-        +
-        (
-          error.message
-          ||
-          error
-        )
-        +
-        '\n\nกรุณาตรวจสอบสิทธิ์ Camera ของ Browser'
-      );
-
-    }
+    scanLoopId =
+      null;
 
   }
+
+
+  if (
+    scanStream
+  ){
+
+    scanStream
+      .getTracks()
+      .forEach(
+        track =>
+          track.stop()
+      );
+
+
+    scanStream =
+      null;
+
+  }
+
+
+  const video =
+    document.getElementById(
+      'scanVideo'
+    );
+
+
+  if (video){
+
+    video.srcObject =
+      null;
+
+  }
+
+}
+
+
+async function restartScanner(){
+
+  qrFound =
+    false;
+
+
+  await startScanner();
 
 }
 
@@ -1112,7 +1477,7 @@ async function startPhotoCamera(){
     }
 
 
-    stream =
+    photoStream =
       await navigator
         .mediaDevices
         .getUserMedia({
@@ -1145,12 +1510,12 @@ async function startPhotoCamera(){
 
     const video =
       document.getElementById(
-        'video'
+        'photoVideo'
       );
 
 
     video.srcObject =
-      stream;
+      photoStream;
 
 
     video.classList.remove(
@@ -1174,7 +1539,6 @@ async function startPhotoCamera(){
   }catch(error){
 
     console.error(
-      'PHOTO CAMERA ERROR:',
       error
     );
 
@@ -1197,14 +1561,16 @@ async function startPhotoCamera(){
 
 
 /* ======================================================
- STOP PHOTO CAMERA
+ STOP PHOTO
 ====================================================== */
 
 async function stopPhotoCamera(){
 
-  if (stream){
+  if (
+    photoStream
+  ){
 
-    stream
+    photoStream
       .getTracks()
       .forEach(
         track =>
@@ -1212,7 +1578,7 @@ async function stopPhotoCamera(){
       );
 
 
-    stream =
+    photoStream =
       null;
 
   }
@@ -1220,7 +1586,7 @@ async function stopPhotoCamera(){
 
   const video =
     document.getElementById(
-      'video'
+      'photoVideo'
     );
 
 
@@ -1242,7 +1608,7 @@ async function capturePhoto(){
 
   const video =
     document.getElementById(
-      'video'
+      'photoVideo'
     );
 
 
@@ -1261,9 +1627,6 @@ async function capturePhoto(){
   }
 
 
-  /*
-    ลดขนาดรูป Check-in
-  */
   const MAX_SIDE =
     560;
 
@@ -1329,9 +1692,6 @@ async function capturePhoto(){
   );
 
 
-  /*
-    WebP ก่อน
-  */
   capturedPhoto =
     canvas.toDataURL(
       'image/webp',
@@ -1339,9 +1699,6 @@ async function capturePhoto(){
     );
 
 
-  /*
-    Safari รุ่นที่ไม่รองรับ WebP encode
-  */
   if (
     !capturedPhoto.startsWith(
       'data:image/webp'
@@ -1384,8 +1741,7 @@ async function capturePhoto(){
     .getElementById(
       'captureButton'
     )
-    .classList
-    .add(
+    .classList.add(
       'hidden'
     );
 
@@ -1394,8 +1750,7 @@ async function capturePhoto(){
     .getElementById(
       'useButton'
     )
-    .classList
-    .remove(
+    .classList.remove(
       'hidden'
     );
 
@@ -1404,8 +1759,7 @@ async function capturePhoto(){
     .getElementById(
       'retakeButton'
     )
-    .classList
-    .remove(
+    .classList.remove(
       'hidden'
     );
 
@@ -1413,7 +1767,7 @@ async function capturePhoto(){
 
 
 /* ======================================================
- RETAKE
+ RETAKE PHOTO
 ====================================================== */
 
 async function retakePhoto(){
@@ -1426,8 +1780,7 @@ async function retakePhoto(){
     .getElementById(
       'useButton'
     )
-    .classList
-    .add(
+    .classList.add(
       'hidden'
     );
 
@@ -1436,8 +1789,7 @@ async function retakePhoto(){
     .getElementById(
       'retakeButton'
     )
-    .classList
-    .add(
+    .classList.add(
       'hidden'
     );
 
@@ -1446,8 +1798,7 @@ async function retakePhoto(){
     .getElementById(
       'captureButton'
     )
-    .classList
-    .remove(
+    .classList.remove(
       'hidden'
     );
 
@@ -1463,7 +1814,9 @@ async function retakePhoto(){
 
 function sendPhoto(){
 
-  if (!capturedPhoto){
+  if (
+    !capturedPhoto
+  ){
 
     alert(
       'ยังไม่ได้ถ่ายภาพ'
@@ -1488,7 +1841,7 @@ function sendPhoto(){
   }catch(error){
 
     alert(
-      'ส่งรูปกลับระบบไม่สำเร็จ\n\n'
+      'ส่งภาพกลับระบบไม่สำเร็จ\n\n'
       +
       (
         error.message
@@ -1512,7 +1865,7 @@ function sendPhoto(){
       }catch(_){}
 
     },
-    800
+    900
   );
 
 }
@@ -1524,7 +1877,7 @@ function sendPhoto(){
 
 async function closeCameraPage(){
 
-  await clearScanner();
+  await stopScanner();
 
   await stopPhotoCamera();
 
@@ -1539,18 +1892,16 @@ async function closeCameraPage(){
 
 
 /* ======================================================
- PAGE CLEANUP
+ CLEANUP
 ====================================================== */
 
 window.addEventListener(
   'pagehide',
   () => {
 
-    try{
+    stopScanner();
 
-      stopPhotoCamera();
-
-    }catch(_){}
+    stopPhotoCamera();
 
   }
 );
@@ -1558,5 +1909,4 @@ window.addEventListener(
 </script>
 
 </body>
-
 </html>
