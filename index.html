@@ -12,7 +12,7 @@
 
 <meta
   name="theme-color"
-  content="#0a252e"
+  content="#0b2630"
 >
 
 <title>พกสุข Camera</title>
@@ -20,17 +20,6 @@
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 
 <style>
-
-:root{
-  --p:#168c9c;
-  --p2:#19b39d;
-  --green:#13aa77;
-  --red:#df6068;
-  --bg:#081d24;
-  --panel:#113945;
-  --text:#fff;
-  --muted:#bed1d7;
-}
 
 *{
   box-sizing:border-box;
@@ -40,13 +29,16 @@ html,
 body{
   margin:0;
   min-height:100%;
+
+  color:#fff;
+
   background:
     linear-gradient(
       180deg,
-      #102d37,
-      var(--bg)
+      #102f39,
+      #071c23
     );
-  color:var(--text);
+
   font-family:
     -apple-system,
     BlinkMacSystemFont,
@@ -60,81 +52,96 @@ body{
 }
 
 main{
-  width:min(720px,100%);
+  width:min(700px,100%);
   margin:auto;
+
   padding:
-    18px
+    17px
     14px
     calc(
-      22px +
+      20px +
       env(safe-area-inset-bottom)
     );
 }
 
 .brand{
   text-align:center;
-  font-size:26px;
+  font-size:25px;
   font-weight:900;
 }
 
 .subtitle{
-  margin-top:8px;
+  margin-top:6px;
+  color:#bad0d7;
   text-align:center;
-  color:var(--muted);
 }
 
 .card{
-  margin-top:18px;
+  margin-top:17px;
   padding:14px;
-  background:var(--panel);
-  border-radius:24px;
+
+  background:#123945;
+
+  border-radius:23px;
 }
 
 .camera{
   position:relative;
-  overflow:hidden;
+
   width:100%;
   aspect-ratio:3/4;
+
+  overflow:hidden;
+
   background:#000;
-  border-radius:21px;
+
+  border-radius:20px;
 }
 
 .camera video,
 .camera img{
   display:block;
+
   width:100%;
   height:100%;
+
   object-fit:cover;
+
+  background:#000;
 }
 
 .placeholder{
   position:absolute;
   inset:0;
   z-index:3;
+
   display:flex;
   flex-direction:column;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
+
   padding:25px;
+
   text-align:center;
-  background:
-    linear-gradient(
-      180deg,
-      #081d24,
-      #0b2730
-    );
+
+  background:#0b252d;
 }
 
 .placeholderIcon{
-  width:85px;
-  height:85px;
+  width:82px;
+  height:82px;
+
   display:grid;
   place-items:center;
-  margin-bottom:15px;
+
+  margin-bottom:12px;
+
+  font-size:40px;
+
   border-radius:27px;
+
   background:
-    rgba(25,179,157,.14);
-  font-size:42px;
+    rgba(25,180,157,.14);
 }
 
 .placeholder h2{
@@ -143,97 +150,110 @@ main{
 
 .placeholder p{
   margin:0;
-  color:var(--muted);
+  color:#bad0d7;
 }
 
 .frame{
   position:absolute;
   z-index:5;
+
   left:50%;
   top:50%;
+
   width:78%;
   aspect-ratio:1;
+
   transform:
     translate(-50%,-50%);
-  pointer-events:none;
 }
 
-.c{
+.corner{
   position:absolute;
-  width:57px;
-  height:57px;
+  width:55px;
+  height:55px;
 }
 
 .tl{
   left:0;
   top:0;
-  border-left:6px solid white;
-  border-top:6px solid white;
+  border-left:6px solid #fff;
+  border-top:6px solid #fff;
 }
 
 .tr{
   right:0;
   top:0;
-  border-right:6px solid white;
-  border-top:6px solid white;
+  border-right:6px solid #fff;
+  border-top:6px solid #fff;
 }
 
 .bl{
   left:0;
   bottom:0;
-  border-left:6px solid white;
-  border-bottom:6px solid white;
+  border-left:6px solid #fff;
+  border-bottom:6px solid #fff;
 }
 
 .br{
   right:0;
   bottom:0;
-  border-right:6px solid white;
-  border-bottom:6px solid white;
+  border-right:6px solid #fff;
+  border-bottom:6px solid #fff;
 }
 
 .face{
   position:absolute;
   z-index:5;
+
   left:50%;
   top:50%;
+
   width:62%;
   height:68%;
+
   transform:
     translate(-50%,-50%);
-  border:3px solid white;
+
+  border:3px solid #fff;
+
   border-radius:45%;
 }
 
 .status{
-  margin-top:11px;
+  margin-top:10px;
   padding:12px;
+
+  color:#bad0d7;
   text-align:center;
-  color:var(--muted);
+
   background:
     rgba(255,255,255,.06);
+
   border-radius:14px;
 }
 
 .status.ok{
-  color:#dcfff4;
+  color:#dbfff3;
   background:
-    rgba(19,170,119,.2);
+    rgba(20,170,119,.2);
 }
 
 .status.error{
-  color:#ffd9dc;
+  color:#ffdadd;
   background:
     rgba(223,96,104,.2);
 }
 
 .btn{
   width:100%;
-  min-height:59px;
-  margin-top:10px;
+  min-height:58px;
+
+  margin-top:9px;
   padding:11px 16px;
+
   border:0;
   border-radius:17px;
+
   font:inherit;
   font-size:18px;
   font-weight:900;
@@ -241,17 +261,18 @@ main{
 
 .primary{
   color:white;
+
   background:
     linear-gradient(
       135deg,
-      var(--p),
-      var(--p2)
+      #168b9b,
+      #19b39d
     );
 }
 
 .green{
   color:white;
-  background:var(--green);
+  background:#13a877;
 }
 
 .light{
@@ -260,8 +281,8 @@ main{
 }
 
 .info{
-  margin-top:9px;
-  color:#91afb8;
+  margin-top:8px;
+  color:#8eabb4;
   text-align:center;
   font-size:11px;
 }
@@ -289,7 +310,7 @@ canvas{
 ></div>
 
 
-<!-- SCANNER -->
+<!-- QR SCANNER -->
 
 <section
   id="scanPage"
@@ -304,6 +325,7 @@ canvas{
       muted
       playsinline
     ></video>
+
 
     <div
       id="scanPlaceholder"
@@ -326,19 +348,19 @@ canvas{
 
 
     <div
-      id="frame"
+      id="scanFrame"
       class="frame hidden"
     >
-      <div class="c tl"></div>
-      <div class="c tr"></div>
-      <div class="c bl"></div>
-      <div class="c br"></div>
+      <div class="corner tl"></div>
+      <div class="corner tr"></div>
+      <div class="corner bl"></div>
+      <div class="corner br"></div>
     </div>
 
   </div>
 
 
-  <canvas id="canvas"></canvas>
+  <canvas id="scanCanvas"></canvas>
 
 
   <div
@@ -350,7 +372,7 @@ canvas{
 
 
   <button
-    id="scanButton"
+    id="scanBtn"
     class="btn primary"
     onclick="startScanner()"
   >
@@ -426,7 +448,7 @@ canvas{
 
 
   <button
-    id="openPhoto"
+    id="openPhotoBtn"
     class="btn primary"
     onclick="startPhoto()"
   >
@@ -435,7 +457,7 @@ canvas{
 
 
   <button
-    id="capture"
+    id="captureBtn"
     class="btn primary hidden"
     onclick="capturePhoto()"
   >
@@ -444,7 +466,7 @@ canvas{
 
 
   <button
-    id="usePhoto"
+    id="useBtn"
     class="btn green hidden"
     onclick="sendPhoto()"
   >
@@ -453,7 +475,7 @@ canvas{
 
 
   <button
-    id="retake"
+    id="retakeBtn"
     class="btn light hidden"
     onclick="retakePhoto()"
   >
@@ -481,58 +503,43 @@ canvas{
 
 <script>
 
-const P =
+const PARAMS =
   new URLSearchParams(
     location.search
   );
 
 
 const MODE =
-  P.get('mode')
+  PARAMS.get('mode')
   || 'scan';
 
 
 const APP_MODE =
-  P.get('appMode')
+  PARAMS.get('appMode')
   || 'kiosk';
 
 
 const SESSION =
-  P.get('session')
+  PARAMS.get('session')
   || '';
 
 
 const RETURN_URL =
-  P.get('returnUrl')
+  PARAMS.get('returnUrl')
   || '';
 
 
-let scanStream =
-  null;
+let scanStream = null;
+let photoStream = null;
 
+let scanLoopId = null;
 
-let photoStream =
-  null;
+let scanning = false;
+let qrFound = false;
 
+let lastScanTime = 0;
 
-let loop =
-  null;
-
-
-let scanning =
-  false;
-
-
-let found =
-  false;
-
-
-let last =
-  0;
-
-
-let photoData =
-  '';
+let photoData = '';
 
 
 window.addEventListener(
@@ -544,23 +551,21 @@ window.addEventListener(
 function init(){
 
   if (
-    !SESSION
-    ||
+    !SESSION ||
     !RETURN_URL
-  ){
+  ) {
 
     alert(
-      'Camera Session ไม่ครบ'
+      'Camera Session ไม่ครบ กรุณาเปิดจากระบบพกสุข'
     );
 
     return;
-
   }
 
 
   if (
     MODE === 'photo'
-  ){
+  ) {
 
     document
       .getElementById(
@@ -580,21 +585,19 @@ function init(){
 
 
     return;
-
   }
 
 
   if (
     typeof jsQR
     !== 'function'
-  ){
+  ) {
 
     alert(
       'โหลดระบบอ่าน QR ไม่สำเร็จ'
     );
 
     return;
-
   }
 
 
@@ -613,7 +616,6 @@ function init(){
     )
     .textContent =
     'สแกน QR ประจำตัวสมาชิก';
-
 }
 
 
@@ -626,11 +628,10 @@ function sleep(ms){
         ms
       )
   );
-
 }
 
 
-function media(
+function getMedia(
   constraints,
   timeout=12000
 ){
@@ -643,7 +644,8 @@ function media(
       ),
 
     new Promise(
-      (_,reject) =>
+      (_, reject) =>
+
         setTimeout(
           () =>
             reject(
@@ -653,10 +655,10 @@ function media(
             ),
           timeout
         )
+
     )
 
   ]);
-
 }
 
 
@@ -668,62 +670,56 @@ function waitVideo(
   return new Promise(
     resolve => {
 
-      const start =
+      const started =
         Date.now();
 
 
-      const check =
-        () => {
+      function check(){
 
-          if (
-            video.videoWidth > 0
-            &&
-            video.videoHeight > 0
-          ){
+        if (
+          video.videoWidth > 0 &&
+          video.videoHeight > 0
+        ) {
 
-            resolve(true);
+          resolve(true);
+          return;
 
-            return;
-
-          }
+        }
 
 
-          if (
-            Date.now() - start
-            > timeout
-          ){
+        if (
+          Date.now() - started
+          > timeout
+        ) {
 
-            resolve(false);
+          resolve(false);
+          return;
 
-            return;
-
-          }
+        }
 
 
-          requestAnimationFrame(
-            check
-          );
-
-        };
+        requestAnimationFrame(
+          check
+        );
+      }
 
 
       check();
 
     }
   );
-
 }
 
 
 /* =========================================================
- SCANNER
+   SCANNER
 ========================================================= */
 
 async function startScanner(){
 
   const button =
     document.getElementById(
-      'scanButton'
+      'scanBtn'
     );
 
 
@@ -733,23 +729,19 @@ async function startScanner(){
     );
 
 
-  button.disabled =
-    true;
-
+  button.disabled = true;
 
   status.className =
     'status';
 
-
   status.textContent =
-    'กำลังขอสิทธิ์กล้อง...';
+    'กำลังเปิดกล้องหลัง...';
 
 
   await stopScanner();
 
 
-  found =
-    false;
+  qrFound = false;
 
 
   const video =
@@ -758,14 +750,11 @@ async function startScanner(){
     );
 
 
-  try{
+  try {
 
     if (
-      !navigator.mediaDevices
-      ||
-      !navigator.mediaDevices
-        .getUserMedia
-    ){
+      !navigator.mediaDevices?.getUserMedia
+    ) {
 
       throw new Error(
         'Browser ไม่รองรับ Camera'
@@ -774,30 +763,36 @@ async function startScanner(){
     }
 
 
-    try{
+    try {
 
       scanStream =
-        await media({
+        await getMedia({
 
-          audio:false,
+          audio: false,
 
-          video:{
+          video: {
             facingMode:
-              'environment'
+              'environment',
+
+            width: {
+              ideal: 1280
+            },
+
+            height: {
+              ideal: 720
+            }
+
           }
 
         });
 
 
-    }catch(_){
+    } catch (_) {
 
       scanStream =
-        await media({
-
-          audio:false,
-
-          video:true
-
+        await getMedia({
+          audio: false,
+          video: true
         });
 
     }
@@ -806,10 +801,8 @@ async function startScanner(){
     video.srcObject =
       scanStream;
 
-
     video.muted =
       true;
-
 
     video.playsInline =
       true;
@@ -825,22 +818,22 @@ async function startScanner(){
       );
 
 
-    if (!ready){
+    if (!ready) {
 
       const stream =
         scanStream;
 
 
-      try{
+      try {
         video.pause();
-      }catch(_){}
+      } catch (_) {}
 
 
       video.srcObject =
         null;
 
 
-      await sleep(350);
+      await sleep(300);
 
 
       video.srcObject =
@@ -859,7 +852,7 @@ async function startScanner(){
     }
 
 
-    if (!ready){
+    if (!ready) {
 
       throw new Error(
         'กล้องเปิดแล้วแต่ไม่มีภาพ'
@@ -879,7 +872,7 @@ async function startScanner(){
 
     document
       .getElementById(
-        'frame'
+        'scanFrame'
       )
       .classList.remove(
         'hidden'
@@ -904,26 +897,24 @@ async function startScanner(){
       video.videoHeight;
 
 
-    button.textContent =
-      'สแกนใหม่';
-
-
     button.disabled =
       false;
+
+    button.textContent =
+      'สแกนใหม่';
 
 
     scanning =
       true;
 
-
-    last =
+    lastScanTime =
       0;
 
 
     scanLoop();
 
 
-  }catch(error){
+  } catch (error) {
 
     await stopScanner();
 
@@ -936,60 +927,55 @@ async function startScanner(){
       'เปิดกล้องไม่สำเร็จ';
 
 
-    button.textContent =
-      'ลองเปิดกล้องใหม่';
-
-
     button.disabled =
       false;
+
+    button.textContent =
+      'ลองเปิดกล้องใหม่';
 
 
     alert(
       'เปิดกล้องไม่ได้\n\n'
       +
       (
-        error.message
-        ||
-        error
+        error.message || error
       )
     );
 
   }
-
 }
 
 
-function scanLoop(time=0){
+function scanLoop(timestamp=0){
 
   if (
-    !scanning
-    ||
-    found
-  ){
-
+    !scanning ||
+    qrFound
+  ) {
     return;
-
   }
 
 
-  loop =
+  scanLoopId =
     requestAnimationFrame(
       scanLoop
     );
 
 
+  /*
+   * อ่านเพียงประมาณ 6 ครั้ง/วินาที
+   * ลด CPU iPhone
+   */
   if (
-    time - last
-    < 120
-  ){
-
+    timestamp - lastScanTime
+    < 160
+  ) {
     return;
-
   }
 
 
-  last =
-    time;
+  lastScanTime =
+    timestamp;
 
 
   const video =
@@ -999,17 +985,22 @@ function scanLoop(time=0){
 
 
   if (
-    !video.videoWidth
-  ){
-
+    !video.videoWidth ||
+    video.readyState < 2
+  ) {
     return;
-
   }
 
 
+  decodeQr(video);
+}
+
+
+function decodeQr(video){
+
   const canvas =
     document.getElementById(
-      'canvas'
+      'scanCanvas'
     );
 
 
@@ -1022,33 +1013,46 @@ function scanLoop(time=0){
     );
 
 
-  const ratio =
+  /*
+   * ใช้ภาพกว้างไม่เกิน 640px
+   * ช่วยลด CPU / RAM มากกว่ารุ่นก่อน
+   */
+  const maxWidth =
+    640;
+
+
+  const scale =
     Math.min(
       1,
-      900 /
+      maxWidth /
       video.videoWidth
     );
 
 
   const width =
-    Math.round(
-      video.videoWidth
-      *
-      ratio
+    Math.max(
+      1,
+      Math.round(
+        video.videoWidth
+        *
+        scale
+      )
     );
 
 
   const height =
-    Math.round(
-      video.videoHeight
-      *
-      ratio
+    Math.max(
+      1,
+      Math.round(
+        video.videoHeight
+        *
+        scale
+      )
     );
 
 
   canvas.width =
     width;
-
 
   canvas.height =
     height;
@@ -1085,26 +1089,21 @@ function scanLoop(time=0){
 
 
   if (
-    result
-    &&
-    result.data
-  ){
+    result?.data
+  ) {
 
-    qrFound(
+    handleQr(
       result.data
     );
 
   }
-
 }
 
 
-async function qrFound(value){
+async function handleQr(value){
 
-  if (found){
-
+  if (qrFound) {
     return;
-
   }
 
 
@@ -1114,19 +1113,13 @@ async function qrFound(value){
     ).trim();
 
 
-  if (!value){
-
+  if (!value) {
     return;
-
   }
 
 
-  found =
-    true;
-
-
-  scanning =
-    false;
+  qrFound = true;
+  scanning = false;
 
 
   const status =
@@ -1146,7 +1139,7 @@ async function qrFound(value){
   await stopScanner();
 
 
-  post({
+  postBack({
 
     mode:
       APP_MODE,
@@ -1161,7 +1154,6 @@ async function qrFound(value){
       value
 
   });
-
 }
 
 
@@ -1171,17 +1163,23 @@ async function stopScanner(){
     false;
 
 
-  if (loop){
+  if (
+    scanLoopId
+  ) {
 
-    cancelAnimationFrame(loop);
+    cancelAnimationFrame(
+      scanLoopId
+    );
 
-    loop =
+    scanLoopId =
       null;
 
   }
 
 
-  if (scanStream){
+  if (
+    scanStream
+  ) {
 
     scanStream
       .getTracks()
@@ -1203,30 +1201,29 @@ async function stopScanner(){
     );
 
 
-  if (video){
+  if (video) {
 
-    try{
+    try {
       video.pause();
-    }catch(_){}
+    } catch (_) {}
 
 
     video.srcObject =
       null;
 
   }
-
 }
 
 
 /* =========================================================
- PHOTO
+   PHOTO
 ========================================================= */
 
 async function startPhoto(){
 
   const button =
     document.getElementById(
-      'openPhoto'
+      'openPhotoBtn'
     );
 
 
@@ -1251,31 +1248,37 @@ async function startPhoto(){
     );
 
 
-  try{
+  try {
 
-    try{
+    try {
 
       photoStream =
-        await media({
+        await getMedia({
 
           audio:false,
 
           video:{
-            facingMode:'user'
+            facingMode:'user',
+
+            width:{
+              ideal:720
+            },
+
+            height:{
+              ideal:960
+            }
+
           }
 
         });
 
 
-    }catch(_){
+    } catch (_) {
 
       photoStream =
-        await media({
-
+        await getMedia({
           audio:false,
-
           video:true
-
         });
 
     }
@@ -1284,10 +1287,8 @@ async function startPhoto(){
     video.srcObject =
       photoStream;
 
-
     video.muted =
       true;
-
 
     video.playsInline =
       true;
@@ -1303,7 +1304,7 @@ async function startPhoto(){
       );
 
 
-    if (!ready){
+    if (!ready) {
 
       const stream =
         photoStream;
@@ -1313,7 +1314,7 @@ async function startPhoto(){
         null;
 
 
-      await sleep(350);
+      await sleep(300);
 
 
       video.srcObject =
@@ -1332,7 +1333,7 @@ async function startPhoto(){
     }
 
 
-    if (!ready){
+    if (!ready) {
 
       throw new Error(
         'กล้องเปิดแล้วแต่ไม่มีภาพ'
@@ -1366,7 +1367,7 @@ async function startPhoto(){
 
     document
       .getElementById(
-        'capture'
+        'captureBtn'
       )
       .classList.remove(
         'hidden'
@@ -1381,7 +1382,7 @@ async function startPhoto(){
       'Camera ready';
 
 
-  }catch(error){
+  } catch (error) {
 
     await stopPhoto();
 
@@ -1394,20 +1395,19 @@ async function startPhoto(){
       'เปิดกล้องไม่ได้\n\n'
       +
       (
-        error.message
-        ||
-        error
+        error.message || error
       )
     );
 
   }
-
 }
 
 
 async function stopPhoto(){
 
-  if (photoStream){
+  if (
+    photoStream
+  ) {
 
     photoStream
       .getTracks()
@@ -1429,18 +1429,17 @@ async function stopPhoto(){
     );
 
 
-  if (video){
+  if (video) {
 
-    try{
+    try {
       video.pause();
-    }catch(_){}
+    } catch (_) {}
 
 
     video.srcObject =
       null;
 
   }
-
 }
 
 
@@ -1452,25 +1451,26 @@ async function capturePhoto(){
     );
 
 
-  if (
-    !video.videoWidth
-  ){
+  if (!video.videoWidth) {
 
     alert(
       'กล้องยังไม่พร้อม'
     );
 
     return;
-
   }
 
 
+  /*
+   * ลดจาก 560 → 480px
+   * ช่วยให้ POST กลับ Apps Script เร็วขึ้น
+   */
   const maxSide =
-    560;
+    480;
 
 
   const quality =
-    .32;
+    .28;
 
 
   const scale =
@@ -1491,23 +1491,28 @@ async function capturePhoto(){
 
 
   canvas.width =
-    Math.round(
-      video.videoWidth
-      *
-      scale
+    Math.max(
+      1,
+      Math.round(
+        video.videoWidth * scale
+      )
     );
 
 
   canvas.height =
-    Math.round(
-      video.videoHeight
-      *
-      scale
+    Math.max(
+      1,
+      Math.round(
+        video.videoHeight * scale
+      )
     );
 
 
   canvas
-    .getContext('2d')
+    .getContext(
+      '2d',
+      {alpha:false}
+    )
     .drawImage(
       video,
       0,
@@ -1528,7 +1533,7 @@ async function capturePhoto(){
     !photoData.startsWith(
       'data:image/webp'
     )
-  ){
+  ) {
 
     photoData =
       canvas.toDataURL(
@@ -1542,21 +1547,19 @@ async function capturePhoto(){
   await stopPhoto();
 
 
-  document
-    .getElementById(
+  const preview =
+    document.getElementById(
       'preview'
-    )
-    .src =
+    );
+
+
+  preview.src =
     photoData;
 
 
-  document
-    .getElementById(
-      'preview'
-    )
-    .classList.remove(
-      'hidden'
-    );
+  preview.classList.remove(
+    'hidden'
+  );
 
 
   document
@@ -1570,7 +1573,7 @@ async function capturePhoto(){
 
   document
     .getElementById(
-      'capture'
+      'captureBtn'
     )
     .classList.add(
       'hidden'
@@ -1579,7 +1582,7 @@ async function capturePhoto(){
 
   document
     .getElementById(
-      'usePhoto'
+      'useBtn'
     )
     .classList.remove(
       'hidden'
@@ -1588,19 +1591,17 @@ async function capturePhoto(){
 
   document
     .getElementById(
-      'retake'
+      'retakeBtn'
     )
     .classList.remove(
       'hidden'
     );
-
 }
 
 
 function retakePhoto(){
 
-  photoData =
-    '';
+  photoData = '';
 
 
   document
@@ -1614,7 +1615,7 @@ function retakePhoto(){
 
   document
     .getElementById(
-      'usePhoto'
+      'useBtn'
     )
     .classList.add(
       'hidden'
@@ -1623,7 +1624,7 @@ function retakePhoto(){
 
   document
     .getElementById(
-      'retake'
+      'retakeBtn'
     )
     .classList.add(
       'hidden'
@@ -1632,7 +1633,7 @@ function retakePhoto(){
 
   document
     .getElementById(
-      'openPhoto'
+      'openPhotoBtn'
     )
     .classList.remove(
       'hidden'
@@ -1641,7 +1642,7 @@ function retakePhoto(){
 
   document
     .getElementById(
-      'openPhoto'
+      'openPhotoBtn'
     )
     .disabled =
     false;
@@ -1654,24 +1655,22 @@ function retakePhoto(){
     .classList.remove(
       'hidden'
     );
-
 }
 
 
 function sendPhoto(){
 
-  if (!photoData){
+  if (!photoData) {
 
     alert(
       'ยังไม่ได้ถ่ายภาพ'
     );
 
     return;
-
   }
 
 
-  post({
+  postBack({
 
     mode:
       APP_MODE,
@@ -1686,15 +1685,14 @@ function sendPhoto(){
       photoData
 
   });
-
 }
 
 
 /* =========================================================
- POST BACK
+   POST BACK
 ========================================================= */
 
-function post(fields){
+function postBack(fields){
 
   const form =
     document.createElement(
@@ -1705,10 +1703,8 @@ function post(fields){
   form.method =
     'POST';
 
-
   form.action =
     RETURN_URL;
-
 
   form.target =
     '_self';
@@ -1726,10 +1722,8 @@ function post(fields){
       input.type =
         'hidden';
 
-
       input.name =
         key;
-
 
       input.value =
         fields[key];
@@ -1747,26 +1741,24 @@ function post(fields){
 
 
   form.submit();
-
 }
 
 
 async function returnHome(){
 
   await stopScanner();
-
   await stopPhoto();
 
 
-  window.location.href =
+  window.location.replace(
     RETURN_URL
     +
     '?mode='
     +
     encodeURIComponent(
       APP_MODE
-    );
-
+    )
+  );
 }
 
 
