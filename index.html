@@ -14,7 +14,10 @@
   name="theme-color"
   content="#087f7b">
 
-<title>พกสุข Camera</title>
+<title>
+  พกสุข Camera
+</title>
+
 
 <script
   src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js">
@@ -24,18 +27,26 @@
 <style>
 
 :root{
+
   --primary:#087f7b;
+
   --mint:#e4f7f4;
+
   --bg:#f4f8f9;
+
   --text:#18383d;
+
   --muted:#718589;
 }
+
 
 *{
   box-sizing:border-box;
 }
 
+
 body{
+
   margin:0;
 
   font-family:
@@ -45,12 +56,18 @@ body{
     system-ui,
     sans-serif;
 
-  color:var(--text);
-  background:var(--bg);
+  color:
+    var(--text);
+
+  background:
+    var(--bg);
 }
 
+
 main{
-  width:min(620px,100%);
+
+  width:
+    min(620px,100%);
 
   margin:auto;
 
@@ -65,32 +82,48 @@ main{
   text-align:center;
 }
 
+
 .logo{
+
   width:58px;
+
   height:58px;
 
   margin:
     0 auto 10px;
 
   display:grid;
+
   place-items:center;
 
-  color:#087f7b;
-  background:var(--mint);
+  color:
+    var(--primary);
+
+  background:
+    var(--mint);
 
   border-radius:20px;
+
+  font-size:25px;
 }
 
+
 h1{
+
   margin:
     0 0 5px;
 }
 
+
 .status{
-  color:var(--muted);
+
+  color:
+    var(--muted);
 }
 
+
 .camera{
+
   position:relative;
 
   overflow:hidden;
@@ -102,7 +135,9 @@ h1{
   background:#111;
 }
 
+
 video{
+
   display:block;
 
   width:100%;
@@ -112,10 +147,13 @@ video{
   object-fit:cover;
 }
 
+
 .qr-guide{
+
   position:absolute;
 
   top:50%;
+
   left:50%;
 
   width:58%;
@@ -135,13 +173,17 @@ video{
     rgba(0,0,0,.28);
 }
 
+
 .face-guide{
+
   position:absolute;
 
   top:50%;
+
   left:50%;
 
   width:52%;
+
   height:72%;
 
   transform:
@@ -153,8 +195,10 @@ video{
   border-radius:48%;
 }
 
+
 button,
 .file-button{
+
   width:100%;
 
   min-height:52px;
@@ -162,27 +206,39 @@ button,
   margin-top:10px;
 
   display:flex;
+
   align-items:center;
+
   justify-content:center;
 
   border:0;
+
   border-radius:15px;
 
   color:#fff;
-  background:var(--primary);
+
+  background:
+    var(--primary);
 
   font-size:16px;
+
   font-weight:700;
 
   cursor:pointer;
 }
 
+
 .secondary{
+
   color:#087069;
-  background:var(--mint);
+
+  background:
+    var(--mint);
 }
 
+
 .preview{
+
   width:100%;
 
   max-height:65vh;
@@ -192,7 +248,9 @@ button,
   border-radius:20px;
 }
 
+
 .fallback{
+
   margin-top:15px;
 
   padding:16px;
@@ -202,11 +260,15 @@ button,
   border-radius:18px;
 }
 
+
 input[type=file]{
+
   display:none;
 }
 
+
 .hidden{
+
   display:none!important;
 }
 
@@ -220,13 +282,16 @@ input[type=file]{
 
 <main>
 
+
 <div class="logo">
   ♥
 </div>
 
+
 <h1 id="title">
   พกสุข Camera
 </h1>
+
 
 <p
   id="status"
@@ -320,9 +385,12 @@ input[type=file]{
   class="fallback hidden">
 
   <p>
+
     หากกล้องสดใช้งานไม่ได้
-    ให้ใช้กล้องของอุปกรณ์แทน
+    สามารถใช้กล้องของอุปกรณ์แทน
+
   </p>
+
 
   <label
     class="file-button"
@@ -350,23 +418,28 @@ input[type=file]{
     id="formMode"
     name="mode">
 
+
   <input
     id="formAction"
     name="cameraAction">
+
 
   <input
     id="formSession"
     name="cameraSession">
 
+
   <input
     id="formValue"
     name="cameraValue">
+
 
   <input
     id="formData"
     name="cameraData">
 
 </form>
+
 
 </main>
 
@@ -376,7 +449,9 @@ input[type=file]{
 function el(id){
 
   return document
-    .getElementById(id);
+    .getElementById(
+      id
+    );
 }
 
 
@@ -389,121 +464,188 @@ const params =
 const cameraSession =
   params.get(
     'cameraSession'
-  ) || '';
+  )
+  ||
+  '';
 
 
 const mode =
-  params.get('mode') ||
+  params.get(
+    'mode'
+  )
+  ||
   'kiosk';
 
 
 const action =
-  params.get('action') ||
+  params.get(
+    'action'
+  )
+  ||
   'qr';
 
 
 const returnUrl =
   params.get(
     'returnUrl'
-  ) || '';
+  )
+  ||
+  '';
 
 
 const video =
-  el('video');
-
-
-const canvas =
-  el('canvas');
-
-
-const ctx =
-  canvas.getContext(
-    '2d',
-    {
-      willReadFrequently:true
-    }
+  el(
+    'video'
   );
 
 
-let stream = null;
-let cameras = [];
-let cameraIndex = 0;
-let scanTimer = null;
-let photoData = '';
+const canvas =
+  el(
+    'canvas'
+  );
 
 
-if(action === 'qr'){
-
-  el('title')
-    .textContent =
-    'สแกน QR สมาชิก';
-
-
-  el('qrGuide')
-    .classList
-    .remove('hidden');
-
-
-  el('fileInput')
-    .setAttribute(
-      'capture',
-      'environment'
+const ctx =
+  canvas
+    .getContext(
+      '2d',
+      {
+        willReadFrequently:
+          true
+      }
     );
 
-}else{
 
-  el('title')
-    .textContent =
-    'ถ่ายภาพยืนยัน';
+let stream =
+  null;
 
 
-  el('faceGuide')
-    .classList
-    .remove('hidden');
+let cameras =
+  [];
 
 
-  el('fileInput')
-    .setAttribute(
-      'capture',
-      'user'
-    );
+let cameraIndex =
+  0;
+
+
+let scanTimer =
+  null;
+
+
+let photoData =
+  '';
+
+
+/* =====================================================
+   INITIAL UI
+===================================================== */
+
+if(
+  action ===
+  'qr'
+){
+
+  el(
+    'title'
+  )
+  .textContent =
+  'สแกน QR สมาชิก';
+
+
+  el(
+    'qrGuide'
+  )
+  .classList
+  .remove(
+    'hidden'
+  );
+
+
+  el(
+    'fileInput'
+  )
+  .setAttribute(
+    'capture',
+    'environment'
+  );
+
+}
+
+else{
+
+  el(
+    'title'
+  )
+  .textContent =
+  'ถ่ายภาพยืนยัน';
+
+
+  el(
+    'faceGuide'
+  )
+  .classList
+  .remove(
+    'hidden'
+  );
+
+
+  el(
+    'fileInput'
+  )
+  .setAttribute(
+    'capture',
+    'user'
+  );
 }
 
 
-el('openButton')
-  .onclick =
-  openCamera;
+el(
+  'openButton'
+)
+.onclick =
+openCamera;
 
 
-el('captureButton')
-  .onclick =
-  takePhoto;
+el(
+  'captureButton'
+)
+.onclick =
+takePhoto;
 
 
-el('switchButton')
-  .onclick =
-  switchCamera;
+el(
+  'switchButton'
+)
+.onclick =
+switchCamera;
 
 
-el('retakeButton')
-  .onclick =
-  retake;
+el(
+  'retakeButton'
+)
+.onclick =
+retake;
 
 
-el('useButton')
-  .onclick =
-  function(){
+el(
+  'useButton'
+)
+.onclick =
+function(){
 
-    sendResult({
-      data:
-        photoData
-    });
-  };
+  sendResult({
+
+    data:
+      photoData
+  });
+};
 
 
-el('fileInput')
-  .onchange =
-  handleFile;
+el(
+  'fileInput'
+)
+.onchange =
+handleFile;
 
 
 /* =====================================================
@@ -521,13 +663,30 @@ async function openCamera(){
       'กรุณาเปิดหน้ากล้องโดยตรง'
     );
 
+
     return;
   }
 
 
   if(
-    !navigator.mediaDevices ||
-    !navigator.mediaDevices
+    !window.isSecureContext
+  ){
+
+    showFallback(
+      'เว็บไซต์ต้องเปิดผ่าน HTTPS'
+    );
+
+
+    return;
+  }
+
+
+  if(
+    !navigator
+      .mediaDevices
+    ||
+    !navigator
+      .mediaDevices
       .getUserMedia
   ){
 
@@ -535,14 +694,18 @@ async function openCamera(){
       'Browser ไม่รองรับกล้องสด'
     );
 
+
     return;
   }
 
 
   const facing =
-    action === 'photo'
-      ? 'user'
-      : 'environment';
+    action ===
+      'photo'
+      ?
+      'user'
+      :
+      'environment';
 
 
   try{
@@ -555,20 +718,27 @@ async function openCamera(){
         .mediaDevices
         .getUserMedia({
 
-          audio:false,
+          audio:
+            false,
 
           video:{
 
             facingMode:{
-              ideal:facing
+
+              ideal:
+                facing
             },
 
             width:{
-              ideal:1280
+
+              ideal:
+                1280
             },
 
             height:{
-              ideal:720
+
+              ideal:
+                720
             }
           }
         });
@@ -598,31 +768,56 @@ async function openCamera(){
       );
 
 
-    el('openButton')
-      .classList
-      .add('hidden');
+    el(
+      'openButton'
+    )
+    .classList
+    .add(
+      'hidden'
+    );
 
 
-    el('switchButton')
+    el(
+      'fallback'
+    )
+    .classList
+    .add(
+      'hidden'
+    );
+
+
+    el(
+      'switchButton'
+    )
+    .classList
+    .toggle(
+      'hidden',
+      cameras.length <
+      2
+    );
+
+
+    if(
+      action ===
+      'photo'
+    ){
+
+      el(
+        'captureButton'
+      )
       .classList
-      .toggle(
-        'hidden',
-        cameras.length < 2
+      .remove(
+        'hidden'
       );
-
-
-    if(action === 'photo'){
-
-      el('captureButton')
-        .classList
-        .remove('hidden');
 
 
       setStatus(
         'จัดใบหน้าให้อยู่กลางกรอบ'
       );
 
-    }else{
+    }
+
+    else{
 
       setStatus(
         'นำ QR ไว้ในกรอบ'
@@ -635,36 +830,58 @@ async function openCamera(){
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
 
-    showFallback(
+    if(
       error.name ===
       'NotAllowedError'
-        ?
+    ){
+
+      showFallback(
         'ไม่ได้รับอนุญาตให้ใช้กล้อง'
-        :
+      );
+
+    }
+
+    else{
+
+      showFallback(
         'เปิดกล้องไม่ได้'
-    );
+      );
+    }
   }
 }
 
 
+/* =====================================================
+   SWITCH CAMERA
+===================================================== */
+
 async function switchCamera(){
 
-  if(cameras.length < 2){
+  if(
+    cameras.length <
+    2
+  ){
+
     return;
   }
 
 
   cameraIndex =
     (
-      cameraIndex + 1
-    ) %
+      cameraIndex +
+      1
+    )
+    %
     cameras.length;
 
 
   stopScanner();
+
 
   stopCamera();
 
@@ -676,7 +893,8 @@ async function switchCamera(){
         .mediaDevices
         .getUserMedia({
 
-          audio:false,
+          audio:
+            false,
 
           video:{
 
@@ -685,7 +903,8 @@ async function switchCamera(){
               exact:
                 cameras[
                   cameraIndex
-                ].deviceId
+                ]
+                .deviceId
             }
           }
         });
@@ -698,13 +917,21 @@ async function switchCamera(){
     await video.play();
 
 
-    if(action === 'qr'){
+    if(
+      action ===
+      'qr'
+    ){
 
       startScanner();
     }
 
 
   }catch(error){
+
+    console.error(
+      error
+    );
+
 
     showFallback(
       'สลับกล้องไม่ได้'
@@ -714,7 +941,7 @@ async function switchCamera(){
 
 
 /* =====================================================
-   QR
+   QR SCAN
 ===================================================== */
 
 function startScanner(){
@@ -724,7 +951,9 @@ function startScanner(){
 
   scanTimer =
     setInterval(
+
       scanFrame,
+
       180
     );
 }
@@ -733,7 +962,8 @@ function startScanner(){
 function scanFrame(){
 
   if(
-    !video.videoWidth ||
+    !video.videoWidth
+    ||
     !video.videoHeight
   ){
 
@@ -750,45 +980,70 @@ function scanFrame(){
 
 
   ctx.drawImage(
+
     video,
+
     0,
+
     0,
+
     canvas.width,
+
     canvas.height
   );
 
 
   const image =
     ctx.getImageData(
+
       0,
+
       0,
+
       canvas.width,
+
       canvas.height
     );
 
 
   const qr =
     jsQR(
+
       image.data,
+
       image.width,
+
       image.height,
+
       {
+
         inversionAttempts:
           'attemptBoth'
       }
     );
 
 
-  if(!qr){
+  if(
+    !qr
+  ){
+
     return;
   }
 
 
   stopScanner();
+
+
   stopCamera();
 
 
+  setStatus(
+    'พบ QR แล้ว'
+  );
+
+
   sendResult({
+
     value:
       qr.data
   });
@@ -801,15 +1056,21 @@ function scanFrame(){
 
 function takePhoto(){
 
-  if(!video.videoWidth){
+  if(
+    !video.videoWidth
+  ){
+
     return;
   }
 
 
   photoData =
     compressImage(
+
       video,
+
       video.videoWidth,
+
       video.videoHeight
     );
 
@@ -817,38 +1078,65 @@ function takePhoto(){
   stopCamera();
 
 
-  el('preview').src =
-    photoData;
+  el(
+    'preview'
+  )
+  .src =
+  photoData;
 
 
-  el('preview')
-    .classList
-    .remove('hidden');
+  el(
+    'preview'
+  )
+  .classList
+  .remove(
+    'hidden'
+  );
 
 
-  el('cameraBox')
-    .classList
-    .add('hidden');
+  el(
+    'cameraBox'
+  )
+  .classList
+  .add(
+    'hidden'
+  );
 
 
-  el('captureButton')
-    .classList
-    .add('hidden');
+  el(
+    'captureButton'
+  )
+  .classList
+  .add(
+    'hidden'
+  );
 
 
-  el('switchButton')
-    .classList
-    .add('hidden');
+  el(
+    'switchButton'
+  )
+  .classList
+  .add(
+    'hidden'
+  );
 
 
-  el('retakeButton')
-    .classList
-    .remove('hidden');
+  el(
+    'retakeButton'
+  )
+  .classList
+  .remove(
+    'hidden'
+  );
 
 
-  el('useButton')
-    .classList
-    .remove('hidden');
+  el(
+    'useButton'
+  )
+  .classList
+  .remove(
+    'hidden'
+  );
 
 
   setStatus(
@@ -859,32 +1147,53 @@ function takePhoto(){
 
 function retake(){
 
-  photoData = '';
+  photoData =
+    '';
 
 
-  el('preview')
-    .classList
-    .add('hidden');
+  el(
+    'preview'
+  )
+  .classList
+  .add(
+    'hidden'
+  );
 
 
-  el('cameraBox')
-    .classList
-    .remove('hidden');
+  el(
+    'cameraBox'
+  )
+  .classList
+  .remove(
+    'hidden'
+  );
 
 
-  el('retakeButton')
-    .classList
-    .add('hidden');
+  el(
+    'retakeButton'
+  )
+  .classList
+  .add(
+    'hidden'
+  );
 
 
-  el('useButton')
-    .classList
-    .add('hidden');
+  el(
+    'useButton'
+  )
+  .classList
+  .add(
+    'hidden'
+  );
 
 
-  el('openButton')
-    .classList
-    .remove('hidden');
+  el(
+    'openButton'
+  )
+  .classList
+  .remove(
+    'hidden'
+  );
 
 
   setStatus(
@@ -897,29 +1206,49 @@ function retake(){
    FALLBACK FILE
 ===================================================== */
 
-function showFallback(message){
+function showFallback(
+  message
+){
 
   stopScanner();
+
+
   stopCamera();
 
 
-  setStatus(message);
+  setStatus(
+    message
+  );
 
 
-  el('fallback')
-    .classList
-    .remove('hidden');
+  el(
+    'fallback'
+  )
+  .classList
+  .remove(
+    'hidden'
+  );
 }
 
 
-function handleFile(event){
+function handleFile(
+  event
+){
 
   const file =
-    event.target.files &&
-    event.target.files[0];
+    event
+      .target
+      .files
+    &&
+    event
+      .target
+      .files[0];
 
 
-  if(!file){
+  if(
+    !file
+  ){
+
     return;
   }
 
@@ -937,7 +1266,10 @@ function handleFile(event){
   image.onload =
     function(){
 
-      if(action === 'qr'){
+      if(
+        action ===
+        'qr'
+      ){
 
         canvas.width =
           image.width;
@@ -948,49 +1280,66 @@ function handleFile(event){
 
 
         ctx.drawImage(
+
           image,
+
           0,
+
           0
         );
 
 
         const pixels =
           ctx.getImageData(
+
             0,
+
             0,
+
             canvas.width,
+
             canvas.height
           );
 
 
         const qr =
           jsQR(
+
             pixels.data,
+
             pixels.width,
+
             pixels.height,
+
             {
+
               inversionAttempts:
                 'attemptBoth'
             }
           );
 
 
-        URL.revokeObjectURL(
-          objectUrl
-        );
+        URL
+          .revokeObjectURL(
+            objectUrl
+          );
 
 
-        if(!qr){
+        if(
+          !qr
+        ){
 
           setStatus(
             'ไม่พบ QR ในภาพ'
           );
+
 
           return;
         }
 
 
         sendResult({
+
           value:
             qr.data
         });
@@ -1002,44 +1351,71 @@ function handleFile(event){
 
       photoData =
         compressImage(
+
           image,
+
           image.width,
+
           image.height
         );
 
 
-      URL.revokeObjectURL(
-        objectUrl
+      URL
+        .revokeObjectURL(
+          objectUrl
+        );
+
+
+      el(
+        'fallback'
+      )
+      .classList
+      .add(
+        'hidden'
       );
 
 
-      el('fallback')
-        .classList
-        .add('hidden');
+      el(
+        'cameraBox'
+      )
+      .classList
+      .add(
+        'hidden'
+      );
 
 
-      el('cameraBox')
-        .classList
-        .add('hidden');
+      el(
+        'preview'
+      )
+      .src =
+      photoData;
 
 
-      el('preview').src =
-        photoData;
+      el(
+        'preview'
+      )
+      .classList
+      .remove(
+        'hidden'
+      );
 
 
-      el('preview')
-        .classList
-        .remove('hidden');
+      el(
+        'retakeButton'
+      )
+      .classList
+      .remove(
+        'hidden'
+      );
 
 
-      el('retakeButton')
-        .classList
-        .remove('hidden');
-
-
-      el('useButton')
-        .classList
-        .remove('hidden');
+      el(
+        'useButton'
+      )
+      .classList
+      .remove(
+        'hidden'
+      );
     };
 
 
@@ -1049,7 +1425,7 @@ function handleFile(event){
 
 
 /* =====================================================
-   COMPRESS FACE
+   IMAGE COMPRESSION
 ===================================================== */
 
 function compressImage(
@@ -1074,12 +1450,14 @@ function compressImage(
     Math.max(
       width,
       height
-    ) >
+    )
+    >
     maxSide
   ){
 
     const ratio =
-      maxSide /
+      maxSide
+      /
       Math.max(
         width,
         height
@@ -1110,17 +1488,24 @@ function compressImage(
 
 
   ctx.drawImage(
+
     source,
+
     0,
+
     0,
+
     width,
+
     height
   );
 
 
   let result =
     canvas.toDataURL(
+
       'image/webp',
+
       .28
     );
 
@@ -1133,7 +1518,9 @@ function compressImage(
 
     result =
       canvas.toDataURL(
+
         'image/jpeg',
+
         .28
       );
   }
@@ -1144,52 +1531,82 @@ function compressImage(
 
 
 /* =====================================================
-   RETURN
+   SEND BACK
 ===================================================== */
 
-function sendResult(result){
+function sendResult(
+  result
+){
 
-  if(!returnUrl){
+  if(
+    !returnUrl
+  ){
 
     setStatus(
       'ไม่พบ Return URL'
     );
+
 
     return;
   }
 
 
   stopScanner();
+
+
   stopCamera();
 
 
-  el('resultForm').action =
-    returnUrl;
+  el(
+    'resultForm'
+  )
+  .action =
+  returnUrl;
 
 
-  el('formMode').value =
-    mode;
+  el(
+    'formMode'
+  )
+  .value =
+  mode;
 
 
-  el('formAction').value =
-    action;
+  el(
+    'formAction'
+  )
+  .value =
+  action;
 
 
-  el('formSession').value =
-    cameraSession;
+  el(
+    'formSession'
+  )
+  .value =
+  cameraSession;
 
 
-  if(action === 'qr'){
+  if(
+    action ===
+    'qr'
+  ){
 
-    el('formValue').value =
-      result.value ||
-      '';
+    el(
+      'formValue'
+    )
+    .value =
+    result.value ||
+    '';
 
-  }else{
+  }
 
-    el('formData').value =
-      result.data ||
-      '';
+  else{
+
+    el(
+      'formData'
+    )
+    .value =
+    result.data ||
+    '';
   }
 
 
@@ -1198,22 +1615,35 @@ function sendResult(result){
   );
 
 
-  el('resultForm')
-    .submit();
+  el(
+    'resultForm'
+  )
+  .submit();
 }
 
 
-function setStatus(text){
+/* =====================================================
+   UTILS
+===================================================== */
 
-  el('status')
-    .textContent =
-    text;
+function setStatus(
+  text
+){
+
+  el(
+    'status'
+  )
+  .textContent =
+  text;
 }
 
 
 function stopCamera(){
 
-  if(!stream){
+  if(
+    !stream
+  ){
+
     return;
   }
 
@@ -1228,34 +1658,44 @@ function stopCamera(){
     );
 
 
-  stream = null;
+  stream =
+    null;
 
-  video.srcObject = null;
+
+  video.srcObject =
+    null;
 }
 
 
 function stopScanner(){
 
-  if(scanTimer){
+  if(
+    scanTimer
+  ){
 
     clearInterval(
       scanTimer
     );
 
 
-    scanTimer = null;
+    scanTimer =
+      null;
   }
 }
 
 
-window.addEventListener(
-  'beforeunload',
-  function(){
+window
+  .addEventListener(
 
-    stopScanner();
-    stopCamera();
-  }
-);
+    'beforeunload',
+
+    function(){
+
+      stopScanner();
+
+      stopCamera();
+    }
+  );
 
 </script>
 
