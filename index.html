@@ -10,9 +10,14 @@
   name="viewport"
   content="width=device-width,initial-scale=1,viewport-fit=cover">
 
+<meta
+  name="theme-color"
+  content="#087f7b">
+
 <title>
   พกสุข Camera
 </title>
+
 
 <script
   src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js">
@@ -22,73 +27,247 @@
 <style>
 
 :root {
+
   --primary:#087f7b;
-  --bg:#f3f8fa;
-  --text:#16373c;
-  --muted:#687f84;
+  --primary2:#22aaa0;
+
+  --mint:#e4f7f4;
+
+  --bg:#f4f8f9;
+
+  --text:#17383c;
+
+  --muted:#718589;
+
+  --border:#dde9eb;
+
+  --shadow:
+    0 16px 45px
+    rgba(18,73,80,.10);
 }
+
 
 * {
   box-sizing:border-box;
 }
 
+
 body {
+
   margin:0;
 
   font-family:
-    system-ui,
     -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    system-ui,
     sans-serif;
 
-  background:var(--bg);
-  color:var(--text);
+  background:
+    var(--bg);
+
+  color:
+    var(--text);
 }
 
-main {
-  width:min(720px,100%);
+
+.page {
+
+  width:
+    min(620px,100%);
+
   margin:auto;
 
   padding:
     calc(
-      18px +
+      25px +
       env(safe-area-inset-top)
     )
     16px
     calc(
-      20px +
+      28px +
       env(safe-area-inset-bottom)
     );
-
-  text-align:center;
 }
 
-.video-box {
+
+/* BRAND */
+
+.brand {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  margin-bottom:25px;
+}
+
+
+.brand-icon {
+
+  width:46px;
+
+  height:46px;
+
+  display:grid;
+
+  place-items:center;
+
+  color:white;
+
+  border-radius:15px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary),
+      var(--primary2)
+    );
+
+  box-shadow:
+    0 10px 25px
+    rgba(8,127,123,.2);
+}
+
+
+.brand-icon svg {
+
+  width:24px;
+  height:24px;
+}
+
+
+.brand h1 {
+
+  margin:0;
+
+  font-size:21px;
+}
+
+
+.brand p {
+
+  margin:2px 0 0;
+
+  color:
+    var(--muted);
+
+  font-size:13px;
+}
+
+
+/* HERO */
+
+.hero {
+
+  text-align:center;
+
+  margin-bottom:18px;
+}
+
+
+.icon {
+
+  width:62px;
+
+  height:62px;
+
+  margin:
+    0 auto 12px;
+
+  display:grid;
+
+  place-items:center;
+
+  color:
+    var(--primary);
+
+  background:
+    var(--mint);
+
+  border-radius:21px;
+}
+
+
+.icon svg {
+
+  width:30px;
+  height:30px;
+}
+
+
+.hero h2 {
+
+  margin:
+    0 0 7px;
+
+  font-size:23px;
+}
+
+
+.status {
+
+  margin:0;
+
+  min-height:21px;
+
+  color:
+    var(--muted);
+
+  font-size:14px;
+}
+
+
+/* CAMERA */
+
+.camera-card {
+
+  padding:10px;
+
+  background:white;
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:26px;
+
+  box-shadow:
+    var(--shadow);
+}
+
+
+.video-wrap {
+
   position:relative;
 
   width:100%;
 
-  margin:18px 0;
+  aspect-ratio:4/3;
 
   overflow:hidden;
 
-  border-radius:22px;
+  border-radius:20px;
 
-  background:#111;
+  background:#101415;
 }
 
+
 video {
+
   display:block;
 
   width:100%;
-
-  min-height:300px;
-
-  max-height:68vh;
+  height:100%;
 
   object-fit:cover;
 }
 
-.face-guide {
+
+.qr-guide {
+
   position:absolute;
 
   top:50%;
@@ -99,68 +278,249 @@ video {
 
   width:58%;
 
-  aspect-ratio:3/4;
+  aspect-ratio:1;
+
+  border:
+    3px solid
+    rgba(255,255,255,.85);
+
+  border-radius:20px;
+
+  box-shadow:
+    0 0 0 999px
+    rgba(0,0,0,.25);
+
+  pointer-events:none;
+}
+
+
+.face-guide {
+
+  position:absolute;
+
+  top:50%;
+  left:50%;
+
+  transform:
+    translate(-50%,-50%);
+
+  width:52%;
+
+  height:72%;
 
   border:
     3px solid
     rgba(255,255,255,.9);
 
-  border-radius:44%;
+  border-radius:48%;
 
   pointer-events:none;
 }
 
-button {
-  width:100%;
-
-  min-height:52px;
-
-  margin:5px 0;
-
-  border:0;
-  border-radius:15px;
-
-  padding:12px;
-
-  font-size:17px;
-  font-weight:700;
-
-  color:#fff;
-  background:var(--primary);
-}
-
-.secondary {
-  color:#086b66;
-  background:#dff5f2;
-}
-
-.hidden {
-  display:none !important;
-}
-
-.message {
-  color:var(--muted);
-}
 
 .preview {
+
+  display:block;
+
   width:100%;
-  max-height:68vh;
+
+  max-height:65vh;
 
   object-fit:contain;
 
   border-radius:20px;
 
-  background:#111;
+  background:#101415;
 }
 
-.native {
+
+/* BUTTON */
+
+.controls {
+
+  display:grid;
+
+  gap:10px;
+
   margin-top:15px;
+}
 
-  padding:16px;
 
-  background:#fff;
+button {
+
+  width:100%;
+
+  min-height:53px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:9px;
+
+  border:0;
 
   border-radius:16px;
+
+  padding:12px;
+
+  font-size:16px;
+
+  font-weight:700;
+
+  cursor:pointer;
+}
+
+
+button svg {
+
+  width:20px;
+  height:20px;
+}
+
+
+.primary {
+
+  color:white;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary),
+      #18a097
+    );
+
+  box-shadow:
+    0 9px 24px
+    rgba(8,127,123,.20);
+}
+
+
+.secondary {
+
+  color:
+    #086b67;
+
+  background:
+    var(--mint);
+}
+
+
+.white {
+
+  color:
+    var(--text);
+
+  background:white;
+
+  border:
+    1px solid
+    var(--border);
+}
+
+
+/* FALLBACK */
+
+.fallback {
+
+  margin-top:15px;
+
+  padding:17px;
+
+  text-align:center;
+
+  border:
+    1px dashed
+    #bad9d6;
+
+  border-radius:18px;
+
+  background:
+    #f9fcfc;
+}
+
+
+.file-label {
+
+  display:block;
+
+  margin-top:12px;
+
+  padding:14px;
+
+  color:
+    #086b67;
+
+  background:
+    var(--mint);
+
+  border-radius:14px;
+
+  font-weight:700;
+
+  cursor:pointer;
+}
+
+
+input[type=file] {
+
+  display:none;
+}
+
+
+.help {
+
+  margin-top:14px;
+
+  padding:14px 16px;
+
+  border-radius:16px;
+
+  color:#60777b;
+
+  background:#edf4f5;
+
+  font-size:13px;
+
+  line-height:1.55;
+}
+
+
+.hidden {
+
+  display:none !important;
+}
+
+
+.toast {
+
+  position:fixed;
+
+  left:50%;
+
+  bottom:
+    calc(
+      22px +
+      env(safe-area-inset-bottom)
+    );
+
+  transform:
+    translateX(-50%);
+
+  z-index:9999;
+
+  max-width:90vw;
+
+  padding:
+    13px 18px;
+
+  color:white;
+
+  background:#17383c;
+
+  border-radius:15px;
 }
 
 </style>
@@ -171,106 +531,235 @@ button {
 <body>
 
 
-<main>
-
-<h2 id="title">
-  พกสุข Camera
-</h2>
+<div class="page">
 
 
-<p
-  id="message"
-  class="message">
-
-  กดปุ่มเพื่อเปิดกล้อง
-
-</p>
+  <div class="brand">
 
 
-<div
-  id="videoBox"
-  class="video-box">
+    <div class="brand-icon">
 
-  <video
-    id="video"
-    playsinline
-    muted>
-  </video>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8">
+
+        <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8z"/>
+
+      </svg>
+
+    </div>
+
+
+    <div>
+
+      <h1>
+        พกสุข
+      </h1>
+
+      <p>
+        กล้องสำหรับระบบสุขภาพชุมชน
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <section class="hero">
+
+
+    <div
+      id="modeIcon"
+      class="icon">
+    </div>
+
+
+    <h2 id="title">
+      Camera
+    </h2>
+
+
+    <p
+      id="status"
+      class="status">
+
+      กดปุ่มเปิดกล้อง
+
+    </p>
+
+
+  </section>
+
+
+  <section class="camera-card">
+
+
+    <div
+      id="videoWrap"
+      class="video-wrap">
+
+
+      <video
+        id="video"
+        playsinline
+        autoplay
+        muted>
+      </video>
+
+
+      <div
+        id="qrGuide"
+        class="qr-guide hidden">
+      </div>
+
+
+      <div
+        id="faceGuide"
+        class="face-guide hidden">
+      </div>
+
+
+    </div>
+
+
+    <img
+      id="preview"
+      class="preview hidden">
+
+
+    <canvas
+      id="canvas"
+      hidden>
+    </canvas>
+
+
+    <div class="controls">
+
+
+      <button
+        id="openButton"
+        class="primary">
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8">
+
+          <path d="M14.5 4 16 7h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h3l1.5-3z"/>
+
+          <circle
+            cx="12"
+            cy="13"
+            r="3"/>
+
+        </svg>
+
+        เปิดกล้อง
+
+      </button>
+
+
+      <button
+        id="captureButton"
+        class="primary hidden">
+
+        ถ่ายภาพ
+
+      </button>
+
+
+      <button
+        id="switchButton"
+        class="secondary hidden">
+
+        สลับกล้อง
+
+      </button>
+
+
+      <button
+        id="retakeButton"
+        class="white hidden">
+
+        ถ่ายใหม่
+
+      </button>
+
+
+      <button
+        id="useButton"
+        class="primary hidden">
+
+        ใช้ภาพนี้
+
+      </button>
+
+
+    </div>
+
+
+    <div
+      id="fallback"
+      class="fallback hidden">
+
+      <strong>
+        ใช้กล้องของอุปกรณ์แทน
+      </strong>
+
+      <p class="status">
+        หากกล้องสดเปิดไม่ได้
+        สามารถถ่ายหรือเลือกรูปจากเครื่อง
+      </p>
+
+
+      <label
+        class="file-label"
+        for="fileInput">
+
+        เปิดกล้อง / เลือกรูป
+
+      </label>
+
+
+      <input
+        id="fileInput"
+        type="file"
+        accept="image/*">
+
+
+    </div>
+
+
+  </section>
 
 
   <div
-    id="faceGuide"
-    class="face-guide hidden">
+    id="permissionHelp"
+    class="help hidden">
+
+    <strong>
+      กล้องถูก Browser ปฏิเสธ
+    </strong>
+
+    <br>
+
+    กรุณาอนุญาต Camera
+    สำหรับเว็บไซต์
+    rmuti8esmartservice101-code.github.io
+    แล้วกดเปิดกล้องอีกครั้ง
+
   </div>
+
 
 </div>
 
 
-<img
-  id="preview"
-  class="preview hidden">
-
-
-<canvas
-  id="canvas"
-  hidden>
-</canvas>
-
-
-<button id="openButton">
-  เปิดกล้อง
-</button>
-
-
-<button
-  id="captureButton"
-  class="hidden">
-
-  ถ่ายภาพ
-
-</button>
-
-
-<button
-  id="switchButton"
-  class="secondary hidden">
-
-  สลับกล้อง
-
-</button>
-
-
-<button
-  id="retakeButton"
-  class="secondary hidden">
-
-  ถ่ายใหม่
-
-</button>
-
-
-<button
-  id="useButton"
-  class="hidden">
-
-  ใช้ภาพนี้
-
-</button>
-
-
 <div
-  id="nativeFallback"
-  class="native hidden">
-
-  <p>
-    ใช้กล้องของอุปกรณ์แทน
-  </p>
-
-  <input
-    id="fileInput"
-    type="file"
-    accept="image/*">
-
+  id="toast"
+  class="toast hidden">
 </div>
 
 
@@ -301,8 +790,6 @@ button {
 
 </form>
 
-</main>
-
 
 <script>
 
@@ -319,11 +806,10 @@ const params =
   );
 
 
-const cameraSession =
+const session =
   params.get(
     'cameraSession'
-  ) ||
-  '';
+  ) || '';
 
 
 const mode =
@@ -362,27 +848,79 @@ let stream = null;
 
 let cameras = [];
 
-let cameraIndex = 0;
+let currentCamera = 0;
 
-let scanner = null;
+let scanTimer = null;
 
-let capturedImage = '';
+let photoData = '';
 
 
-el('title')
-  .textContent =
-  action === 'photo'
-    ? 'ถ่ายภาพยืนยัน'
-    : 'สแกน QR สมาชิก';
-
+/* =====================================================
+   UI
+===================================================== */
 
 if (
-  action === 'photo'
+  action === 'qr'
 ) {
+
+  el('title').textContent =
+    'สแกน QR สมาชิก';
+
+
+  el('qrGuide')
+    .classList
+    .remove('hidden');
+
+
+  el('modeIcon')
+    .innerHTML = `
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8">
+
+        <rect x="3" y="3" width="6" height="6"/>
+        <rect x="15" y="3" width="6" height="6"/>
+        <rect x="3" y="15" width="6" height="6"/>
+
+        <path d="M15 15h2v2h-2zM19 15h2v6h-6v-2M15 19h2"/>
+
+      </svg>
+    `;
+
+}
+
+else {
+
+  el('title').textContent =
+    'ถ่ายภาพยืนยัน';
+
 
   el('faceGuide')
     .classList
     .remove('hidden');
+
+
+  el('modeIcon')
+    .innerHTML = `
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8">
+
+        <path d="M14.5 4 16 7h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h3l1.5-3z"/>
+
+        <circle
+          cx="12"
+          cy="13"
+          r="3"/>
+
+      </svg>
+    `;
 }
 
 
@@ -397,12 +935,12 @@ el('fileInput')
 
 el('openButton')
   .onclick =
-  startCamera;
+  openCamera;
 
 
 el('captureButton')
   .onclick =
-  capturePhoto;
+  takePhoto;
 
 
 el('switchButton')
@@ -419,9 +957,9 @@ el('useButton')
   .onclick =
   function() {
 
-    send({
+    sendResult({
       data:
-        capturedImage
+        photoData
     });
   };
 
@@ -431,18 +969,39 @@ el('fileInput')
   nativeFile;
 
 
-/* =========================================
+/* =====================================================
    CAMERA
-========================================= */
+===================================================== */
 
-async function startCamera() {
+async function openCamera() {
+
+  el('permissionHelp')
+    .classList
+    .add('hidden');
+
+
+  /*
+   ต้องเป็น top-level page
+  */
+  if (
+    window.self !==
+    window.top
+  ) {
+
+    setStatus(
+      'กรุณาเปิดหน้ากล้องใน Browser โดยตรง'
+    );
+
+    return;
+  }
+
 
   if (
     !window.isSecureContext
   ) {
 
     fallback(
-      'กล้องต้องใช้งานผ่าน HTTPS'
+      'เว็บไซต์ต้องเปิดผ่าน HTTPS'
     );
 
     return;
@@ -463,9 +1022,12 @@ async function startCamera() {
   }
 
 
-  el('message')
-    .textContent =
-    'กำลังเปิดกล้อง...';
+  setStatus(
+    'กำลังขออนุญาตใช้กล้อง...'
+  );
+
+
+  stopCamera();
 
 
   const facing =
@@ -477,28 +1039,40 @@ async function startCamera() {
   const attempts = [
 
     {
-      video: {
-        facingMode: {
+
+      audio:false,
+
+      video:{
+
+        facingMode:{
           ideal:facing
         },
-        width: {
+
+        width:{
           ideal:1280
         },
-        height: {
+
+        height:{
           ideal:720
         }
       }
     },
 
     {
-      video: {
-        facingMode: {
+
+      audio:false,
+
+      video:{
+
+        facingMode:{
           ideal:facing
         }
       }
     },
 
     {
+
+      audio:false,
       video:true
     }
   ];
@@ -514,9 +1088,6 @@ async function startCamera() {
 
     try {
 
-      stopCamera();
-
-
       stream =
         await navigator
           .mediaDevices
@@ -527,7 +1098,9 @@ async function startCamera() {
 
       break;
 
-    } catch (error) {
+    }
+
+    catch(error) {
 
       lastError =
         error;
@@ -537,7 +1110,7 @@ async function startCamera() {
 
   if (!stream) {
 
-    cameraError(
+    handleCameraError(
       lastError
     );
 
@@ -552,10 +1125,15 @@ async function startCamera() {
   await video.play();
 
 
-  await enumerateCameras();
+  await loadCameras();
 
 
   el('openButton')
+    .classList
+    .add('hidden');
+
+
+  el('fallback')
     .classList
     .add('hidden');
 
@@ -577,15 +1155,17 @@ async function startCamera() {
       .remove('hidden');
 
 
-    el('message')
-      .textContent =
-      'จัดใบหน้าให้อยู่กลางกรอบ';
+    setStatus(
+      'จัดใบหน้าให้อยู่กลางกรอบ'
+    );
 
-  } else {
+  }
 
-    el('message')
-      .textContent =
-      'นำ QR มาไว้ในกล้อง';
+  else {
+
+    setStatus(
+      'นำ QR มาไว้ภายในกรอบ'
+    );
 
 
     startScanner();
@@ -593,7 +1173,7 @@ async function startCamera() {
 }
 
 
-async function enumerateCameras() {
+async function loadCameras() {
 
   try {
 
@@ -613,7 +1193,9 @@ async function enumerateCameras() {
         }
       );
 
-  } catch (_) {
+  }
+
+  catch(_) {
 
     cameras = [];
   }
@@ -630,10 +1212,11 @@ async function switchCamera() {
   }
 
 
-  cameraIndex =
+  currentCamera =
     (
-      cameraIndex + 1
-    ) %
+      currentCamera + 1
+    )
+    %
     cameras.length;
 
 
@@ -649,13 +1232,15 @@ async function switchCamera() {
         .mediaDevices
         .getUserMedia({
 
-          video: {
+          audio:false,
 
-            deviceId: {
+          video:{
+
+            deviceId:{
 
               exact:
                 cameras[
-                  cameraIndex
+                  currentCamera
                 ].deviceId
             }
           }
@@ -676,25 +1261,27 @@ async function switchCamera() {
       startScanner();
     }
 
-  } catch (error) {
+  }
 
-    cameraError(
+  catch(error) {
+
+    handleCameraError(
       error
     );
   }
 }
 
 
-/* =========================================
+/* =====================================================
    QR
-========================================= */
+===================================================== */
 
 function startScanner() {
 
   stopScanner();
 
 
-  scanner =
+  scanTimer =
     setInterval(
       scanFrame,
       180
@@ -730,7 +1317,7 @@ function scanFrame() {
   );
 
 
-  const pixels =
+  const image =
     ctx.getImageData(
       0,
       0,
@@ -741,12 +1328,12 @@ function scanFrame() {
 
   const qr =
     jsQR(
-      pixels.data,
-      pixels.width,
-      pixels.height,
+      image.data,
+      image.width,
+      image.height,
       {
         inversionAttempts:
-          'dontInvert'
+          'attemptBoth'
       }
     );
 
@@ -762,48 +1349,49 @@ function scanFrame() {
   stopCamera();
 
 
-  send({
+  setStatus(
+    'พบ QR แล้ว'
+  );
+
+
+  sendResult({
     value:
       qr.data
   });
 }
 
 
-/* =========================================
+/* =====================================================
    PHOTO
-========================================= */
+===================================================== */
 
-function capturePhoto() {
+function takePhoto() {
 
   if (
     !video.videoWidth
   ) {
 
+    toast(
+      'กล้องยังไม่พร้อม'
+    );
+
     return;
   }
 
 
-  capturedImage =
+  photoData =
     compress(
       video,
       video.videoWidth,
-      video.videoHeight,
-      540,
-      .30
+      video.videoHeight
     );
 
-
-  preview();
-}
-
-
-function preview() {
 
   stopCamera();
 
 
   el('preview').src =
-    capturedImage;
+    photoData;
 
 
   el('preview')
@@ -811,7 +1399,7 @@ function preview() {
     .remove('hidden');
 
 
-  el('videoBox')
+  el('videoWrap')
     .classList
     .add('hidden');
 
@@ -836,15 +1424,15 @@ function preview() {
     .remove('hidden');
 
 
-  el('message')
-    .textContent =
-    'ตรวจสอบภาพก่อนใช้';
+  setStatus(
+    'ตรวจสอบภาพก่อนยืนยัน'
+  );
 }
 
 
 function retake() {
 
-  capturedImage = '';
+  photoData = '';
 
 
   el('preview')
@@ -852,7 +1440,7 @@ function retake() {
     .add('hidden');
 
 
-  el('videoBox')
+  el('videoWrap')
     .classList
     .remove('hidden');
 
@@ -872,15 +1460,15 @@ function retake() {
     .remove('hidden');
 
 
-  el('message')
-    .textContent =
-    'กดเปิดกล้องเพื่อถ่ายใหม่';
+  setStatus(
+    'กดเปิดกล้องเพื่อถ่ายใหม่'
+  );
 }
 
 
-/* =========================================
-   NATIVE FALLBACK
-========================================= */
+/* =====================================================
+   FALLBACK FILE / NATIVE CAMERA
+===================================================== */
 
 function fallback(message) {
 
@@ -889,12 +1477,12 @@ function fallback(message) {
   stopCamera();
 
 
-  el('message')
-    .textContent =
-    message;
+  setStatus(
+    message
+  );
 
 
-  el('nativeFallback')
+  el('fallback')
     .classList
     .remove('hidden');
 }
@@ -917,7 +1505,7 @@ function nativeFile(event) {
     new Image();
 
 
-  const objectUrl =
+  const url =
     URL.createObjectURL(
       file
     );
@@ -958,74 +1546,105 @@ function nativeFile(event) {
           jsQR(
             pixels.data,
             pixels.width,
-            pixels.height
+            pixels.height,
+            {
+              inversionAttempts:
+                'attemptBoth'
+            }
           );
 
 
         URL.revokeObjectURL(
-          objectUrl
+          url
         );
 
 
         if (!qr) {
 
-          el('message')
-            .textContent =
-            'ไม่พบ QR ในภาพ';
+          toast(
+            'ไม่พบ QR ในภาพ'
+          );
 
           return;
         }
 
 
-        send({
+        sendResult({
           value:
             qr.data
         });
+
 
         return;
       }
 
 
-      capturedImage =
+      photoData =
         compress(
           image,
           image.width,
-          image.height,
-          540,
-          .30
+          image.height
         );
 
 
       URL.revokeObjectURL(
-        objectUrl
+        url
       );
 
 
-      el('nativeFallback')
+      el('fallback')
         .classList
         .add('hidden');
 
 
-      preview();
+      el('preview').src =
+        photoData;
+
+
+      el('preview')
+        .classList
+        .remove('hidden');
+
+
+      el('videoWrap')
+        .classList
+        .add('hidden');
+
+
+      el('retakeButton')
+        .classList
+        .remove('hidden');
+
+
+      el('useButton')
+        .classList
+        .remove('hidden');
+
+
+      setStatus(
+        'ตรวจสอบภาพก่อนยืนยัน'
+      );
     };
 
 
   image.src =
-    objectUrl;
+    url;
 }
 
 
-/* =========================================
-   IMAGE COMPRESSION
-========================================= */
+/* =====================================================
+   COMPRESS
+===================================================== */
 
 function compress(
   source,
   originalWidth,
-  originalHeight,
-  maxSide,
-  quality
+  originalHeight
 ) {
+
+  const maxSide =
+    520;
+
 
   let width =
     originalWidth;
@@ -1053,15 +1672,13 @@ function compress(
 
     width =
       Math.round(
-        width *
-        ratio
+        width * ratio
       );
 
 
     height =
       Math.round(
-        height *
-        ratio
+        height * ratio
       );
   }
 
@@ -1083,151 +1700,206 @@ function compress(
   );
 
 
-  let result =
-    canvas
-      .toDataURL(
-        'image/webp',
-        quality
-      );
+  let data =
+    canvas.toDataURL(
+      'image/webp',
+      .30
+    );
 
 
   if (
-    !result.startsWith(
+    !data.startsWith(
       'data:image/webp'
     )
   ) {
 
-    result =
-      canvas
-        .toDataURL(
-          'image/jpeg',
-          quality
-        );
+    data =
+      canvas.toDataURL(
+        'image/jpeg',
+        .30
+      );
   }
 
 
-  return result;
+  return data;
 }
 
 
-/* =========================================
-   RETURN
-========================================= */
+/* =====================================================
+   SEND RESULT
+===================================================== */
 
-function send(result) {
+function sendResult(result) {
 
   if (!returnUrl) {
 
-    el('message')
-      .textContent =
-      'ไม่พบ Return URL';
+    setStatus(
+      'ไม่พบ Return URL'
+    );
 
     return;
   }
 
 
-  const form =
-    el('returnForm');
+  stopScanner();
+
+  stopCamera();
 
 
-  form.action =
+  el('returnForm').action =
     returnUrl;
 
 
-  el('formMode')
-    .value =
+  el('formMode').value =
     mode;
 
 
-  el('formAction')
-    .value =
+  el('formAction').value =
     action;
 
 
-  el('formSession')
-    .value =
-    cameraSession;
+  el('formSession').value =
+    session;
 
 
   if (
     action === 'qr'
   ) {
 
-    el('formValue')
-      .value =
+    el('formValue').value =
       result.value ||
       '';
 
-  } else {
+  }
 
-    el('formData')
-      .value =
+  else {
+
+    el('formData').value =
       result.data ||
       '';
   }
 
 
-  el('message')
-    .textContent =
-    'กำลังส่งข้อมูลกลับพกสุข...';
+  setStatus(
+    'กำลังส่งข้อมูลกลับพกสุข...'
+  );
 
 
-  form.submit();
+  el('returnForm')
+    .submit();
 }
 
 
-/* =========================================
+/* =====================================================
    ERROR
-========================================= */
+===================================================== */
 
-function cameraError(
+function handleCameraError(
   error
 ) {
 
-  let text =
+  console.error(
+    error
+  );
+
+
+  let message =
     'เปิดกล้องไม่ได้';
 
 
-  switch (
+  if (
     error &&
-    error.name
+    (
+      error.name ===
+      'NotAllowedError'
+      ||
+      error.name ===
+      'SecurityError'
+    )
   ) {
 
-    case 'NotAllowedError':
-    case 'SecurityError':
-
-      text =
-        'ไม่ได้รับอนุญาตให้ใช้กล้อง';
-
-      break;
+    message =
+      'ไม่ได้รับอนุญาตให้ใช้กล้อง';
 
 
-    case 'NotFoundError':
-
-      text =
-        'ไม่พบกล้อง';
-
-      break;
-
-
-    case 'NotReadableError':
-
-      text =
-        'กล้องอาจกำลังถูก App อื่นใช้งาน';
-
-      break;
-
-
-    case 'OverconstrainedError':
-
-      text =
-        'อุปกรณ์ไม่รองรับการตั้งค่ากล้อง';
-
-      break;
+    el('permissionHelp')
+      .classList
+      .remove('hidden');
   }
 
 
-  fallback(text);
+  else if (
+    error &&
+    error.name ===
+    'NotFoundError'
+  ) {
+
+    message =
+      'ไม่พบกล้อง';
+  }
+
+
+  else if (
+    error &&
+    error.name ===
+    'NotReadableError'
+  ) {
+
+    message =
+      'กล้องกำลังถูกโปรแกรมอื่นใช้งาน';
+  }
+
+
+  else if (
+    error &&
+    error.message
+  ) {
+
+    message =
+      error.message;
+  }
+
+
+  fallback(
+    message
+  );
+}
+
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function setStatus(text) {
+
+  el('status')
+    .textContent =
+    text;
+}
+
+
+function toast(text) {
+
+  el('toast')
+    .textContent =
+    text;
+
+
+  el('toast')
+    .classList
+    .remove('hidden');
+
+
+  setTimeout(
+    function() {
+
+      el('toast')
+        .classList
+        .add('hidden');
+
+    },
+    2600
+  );
 }
 
 
@@ -1250,33 +1922,36 @@ function stopCamera() {
 
 
   stream = null;
+
+
+  video.srcObject =
+    null;
 }
 
 
 function stopScanner() {
 
-  if (scanner) {
+  if (scanTimer) {
 
     clearInterval(
-      scanner
+      scanTimer
     );
 
 
-    scanner = null;
+    scanTimer = null;
   }
 }
 
 
-window
-  .addEventListener(
-    'beforeunload',
-    function() {
+window.addEventListener(
+  'beforeunload',
+  function() {
 
-      stopScanner();
+    stopScanner();
 
-      stopCamera();
-    }
-  );
+    stopCamera();
+  }
+);
 
 </script>
 
