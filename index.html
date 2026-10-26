@@ -19,9 +19,7 @@
   พกสุข Camera
 </title>
 
-
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-
 
 <style>
 
@@ -143,16 +141,13 @@ main{
 
 </head>
 
-
 <body>
 
 <main>
 
-
 <div class="brand">
   พกสุข Camera
 </div>
-
 
 <p
   id="subtitle"
@@ -167,7 +162,6 @@ main{
 
   <div id="reader"></div>
 
-
   <div
     id="scanStatus"
     class="status"
@@ -175,14 +169,12 @@ main{
     กำลังเตรียมกล้อง...
   </div>
 
-
   <button
     class="btn primary"
     onclick="startScanner()"
   >
     📷 เปิดกล้องสแกน
   </button>
-
 
   <button
     class="btn secondary"
@@ -208,17 +200,14 @@ main{
       playsinline
     ></video>
 
-
     <img
       id="photoPreview"
       class="hidden"
     >
 
-
     <div class="guide"></div>
 
   </div>
-
 
   <button
     id="captureButton"
@@ -228,7 +217,6 @@ main{
     📸 ถ่ายภาพ
   </button>
 
-
   <button
     id="useButton"
     class="btn success hidden"
@@ -236,7 +224,6 @@ main{
   >
     ✓ ใช้ภาพนี้
   </button>
-
 
   <button
     id="retakeButton"
@@ -246,7 +233,6 @@ main{
     ถ่ายใหม่
   </button>
 
-
   <button
     class="btn secondary"
     onclick="closeCameraPage()"
@@ -255,7 +241,6 @@ main{
   </button>
 
 </section>
-
 
 </main>
 
@@ -370,8 +355,7 @@ async function init(){
       .getElementById(
         'photoPage'
       )
-      .classList
-      .remove(
+      .classList.remove(
         'hidden'
       );
 
@@ -386,7 +370,6 @@ async function init(){
 
     await startPhotoCamera();
 
-
     return;
 
   }
@@ -396,8 +379,7 @@ async function init(){
     .getElementById(
       'scannerPage'
     )
-    .classList
-    .remove(
+    .classList.remove(
       'hidden'
     );
 
@@ -511,22 +493,17 @@ async function startScanner(){
     await scanner.start(
 
       {
-        facingMode:{
-          ideal:'environment'
-        }
+        facingMode:
+          'environment'
       },
 
       {
-
         fps:10,
 
         qrbox:{
           width:280,
           height:280
-        },
-
-        aspectRatio:1
-
+        }
       },
 
       async decodedText => {
@@ -570,6 +547,11 @@ async function startScanner(){
 
   }catch(error){
 
+    console.error(
+      error
+    );
+
+
     status.textContent =
       'เปิดกล้องไม่สำเร็จ';
 
@@ -593,7 +575,7 @@ async function startScanner(){
 
 
 /* ======================================================
- PHOTO
+ PHOTO CAMERA
 ====================================================== */
 
 async function startPhotoCamera(){
@@ -667,8 +649,7 @@ async function startPhotoCamera(){
       .getElementById(
         'photoPreview'
       )
-      .classList
-      .add(
+      .classList.add(
         'hidden'
       );
 
@@ -677,6 +658,11 @@ async function startPhotoCamera(){
 
 
   }catch(error){
+
+    console.error(
+      error
+    );
+
 
     alert(
       'เปิดกล้องไม่ได้\n\n'
@@ -695,6 +681,10 @@ async function startPhotoCamera(){
 
 }
 
+
+/* ======================================================
+ STOP PHOTO CAMERA
+====================================================== */
 
 async function stopPhotoCamera(){
 
@@ -731,8 +721,8 @@ async function stopPhotoCamera(){
 
 
 /* ======================================================
- CAPTURE
- 560PX / QUALITY 0.32
+ CAPTURE PHOTO
+ 560 PX / QUALITY 0.32
 ====================================================== */
 
 async function capturePhoto(){
@@ -897,6 +887,10 @@ async function capturePhoto(){
 }
 
 
+/* ======================================================
+ RETAKE
+====================================================== */
+
 async function retakePhoto(){
 
   capturedPhoto =
@@ -934,6 +928,10 @@ async function retakePhoto(){
 
 }
 
+
+/* ======================================================
+ SEND PHOTO
+====================================================== */
 
 function sendPhoto(){
 
@@ -994,6 +992,10 @@ async function closeCameraPage(){
 
 }
 
+
+/* ======================================================
+ CLEANUP
+====================================================== */
 
 window.addEventListener(
   'pagehide',
