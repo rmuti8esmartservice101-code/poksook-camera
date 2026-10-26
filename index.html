@@ -19,18 +19,29 @@
   พกสุข Camera
 </title>
 
+
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
 
 <style>
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
-html,body{
+html,
+body{
   margin:0;
   min-height:100%;
   background:#071923;
-  color:#fff;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",Tahoma,sans-serif;
+  color:white;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Noto Sans Thai",
+    Tahoma,
+    sans-serif;
 }
 
 main{
@@ -58,28 +69,28 @@ main{
 
 .btn{
   width:100%;
+  min-height:58px;
+  margin-top:9px;
+  padding:12px;
   border:0;
   border-radius:16px;
-  min-height:58px;
-  padding:12px;
   font-weight:800;
   font-size:18px;
-  margin-top:9px;
 }
 
 .primary{
-  color:#fff;
   background:#139ed8;
+  color:white;
 }
 
 .success{
-  color:#fff;
   background:#0bb47c;
+  color:white;
 }
 
 .secondary{
-  color:#17364a;
   background:#e3edf2;
+  color:#17364a;
 }
 
 .hidden{
@@ -87,18 +98,18 @@ main{
 }
 
 #reader{
+  min-height:340px;
   overflow:hidden;
   border-radius:17px;
-  min-height:340px;
 }
 
 .camera{
   position:relative;
-  overflow:hidden;
   width:100%;
   max-height:70vh;
+  overflow:hidden;
   aspect-ratio:3/4;
-  background:#000;
+  background:black;
   border-radius:18px;
 }
 
@@ -132,15 +143,21 @@ main{
 
 </head>
 
+
 <body>
 
 <main>
+
 
 <div class="brand">
   พกสุข Camera
 </div>
 
-<p id="subtitle" class="muted"></p>
+
+<p
+  id="subtitle"
+  class="muted"
+></p>
 
 
 <section
@@ -150,6 +167,7 @@ main{
 
   <div id="reader"></div>
 
+
   <div
     id="scanStatus"
     class="status"
@@ -157,12 +175,14 @@ main{
     กำลังเตรียมกล้อง...
   </div>
 
+
   <button
     class="btn primary"
     onclick="startScanner()"
   >
     📷 เปิดกล้องสแกน
   </button>
+
 
   <button
     class="btn secondary"
@@ -188,10 +208,12 @@ main{
       playsinline
     ></video>
 
+
     <img
       id="photoPreview"
       class="hidden"
     >
+
 
     <div class="guide"></div>
 
@@ -224,12 +246,25 @@ main{
     ถ่ายใหม่
   </button>
 
+
+  <button
+    class="btn secondary"
+    onclick="closeCameraPage()"
+  >
+    ปิด
+  </button>
+
 </section>
+
 
 </main>
 
 
 <script>
+
+/* ======================================================
+ PARAMETERS
+====================================================== */
 
 const params =
   new URLSearchParams(
@@ -257,11 +292,20 @@ const RAW_PARENT_ORIGIN =
   || '';
 
 
-let PARENT_ORIGIN = '';
+let PARENT_ORIGIN =
+  '';
 
-let scanner = null;
-let stream = null;
-let capturedPhoto = '';
+
+let scanner =
+  null;
+
+
+let stream =
+  null;
+
+
+let capturedPhoto =
+  '';
 
 
 try{
@@ -284,6 +328,10 @@ try{
 }catch(_){}
 
 
+/* ======================================================
+ INIT
+====================================================== */
+
 window.addEventListener(
   'load',
   init
@@ -295,10 +343,11 @@ async function init(){
   if (!SESSION){
 
     alert(
-      'ไม่พบ Camera Session'
+      'ไม่พบ Camera Session กรุณาเปิดกล้องจากระบบพกสุข'
     );
 
     return;
+
   }
 
 
@@ -309,6 +358,7 @@ async function init(){
     );
 
     return;
+
   }
 
 
@@ -317,17 +367,18 @@ async function init(){
   ){
 
     document
-      .querySelector(
-        '#photoPage'
+      .getElementById(
+        'photoPage'
       )
-      .classList.remove(
+      .classList
+      .remove(
         'hidden'
       );
 
 
     document
-      .querySelector(
-        '#subtitle'
+      .getElementById(
+        'subtitle'
       )
       .textContent =
       'ถ่ายภาพยืนยันสมาชิก';
@@ -336,35 +387,37 @@ async function init(){
     await startPhotoCamera();
 
 
-  }else{
-
-    document
-      .querySelector(
-        '#scannerPage'
-      )
-      .classList.remove(
-        'hidden'
-      );
-
-
-    document
-      .querySelector(
-        '#subtitle'
-      )
-      .textContent =
-      'Live QR Scanner';
-
-
-    await startScanner();
+    return;
 
   }
+
+
+  document
+    .getElementById(
+      'scannerPage'
+    )
+    .classList
+    .remove(
+      'hidden'
+    );
+
+
+  document
+    .getElementById(
+      'subtitle'
+    )
+    .textContent =
+    'Live QR Scanner';
+
+
+  await startScanner();
 
 }
 
 
-/* ==================================================
- MESSAGE BACK
-================================================== */
+/* ======================================================
+ POST MESSAGE
+====================================================== */
 
 function postBack(
   type,
@@ -374,10 +427,11 @@ function postBack(
   if (!window.opener){
 
     alert(
-      'กรุณาเปิดกล้องจากระบบพกสุข'
+      'ไม่พบหน้าระบบพกสุข กรุณาเปิดกล้องจากปุ่มในระบบ'
     );
 
     return;
+
   }
 
 
@@ -406,15 +460,15 @@ function postBack(
 }
 
 
-/* ==================================================
+/* ======================================================
  QR SCANNER
-================================================== */
+====================================================== */
 
 async function startScanner(){
 
   const status =
-    document.querySelector(
-      '#scanStatus'
+    document.getElementById(
+      'scanStatus'
     );
 
 
@@ -500,7 +554,7 @@ async function startScanner(){
         setTimeout(
           () =>
             window.close(),
-          150
+          250
         );
 
       },
@@ -511,7 +565,7 @@ async function startScanner(){
 
 
     status.textContent =
-      'นำ QR เข้าในกรอบ';
+      'นำ QR เข้าในกรอบกล้อง';
 
 
   }catch(error){
@@ -524,12 +578,13 @@ async function startScanner(){
       'เปิดกล้องไม่ได้\n\n'
       +
       (
+        error &&
         error.message
-        ||
-        error
+          ? error.message
+          : String(error)
       )
       +
-      '\n\nกรุณาตรวจสอบสิทธิ์ Camera'
+      '\n\nกรุณาตรวจสอบสิทธิ์ Camera ของ Browser'
     );
 
   }
@@ -537,9 +592,9 @@ async function startScanner(){
 }
 
 
-/* ==================================================
- PHOTO CAMERA
-================================================== */
+/* ======================================================
+ PHOTO
+====================================================== */
 
 async function startPhotoCamera(){
 
@@ -556,7 +611,7 @@ async function startPhotoCamera(){
     ){
 
       throw new Error(
-        'Browser ไม่รองรับกล้อง'
+        'Browser นี้ไม่รองรับ Camera API'
       );
 
     }
@@ -594,8 +649,8 @@ async function startPhotoCamera(){
 
 
     const video =
-      document.querySelector(
-        '#video'
+      document.getElementById(
+        'video'
       );
 
 
@@ -609,10 +664,11 @@ async function startPhotoCamera(){
 
 
     document
-      .querySelector(
-        '#photoPreview'
+      .getElementById(
+        'photoPreview'
       )
-      .classList.add(
+      .classList
+      .add(
         'hidden'
       );
 
@@ -626,12 +682,13 @@ async function startPhotoCamera(){
       'เปิดกล้องไม่ได้\n\n'
       +
       (
+        error &&
         error.message
-        ||
-        error
+          ? error.message
+          : String(error)
       )
       +
-      '\n\nกรุณาอนุญาตสิทธิ์ Camera'
+      '\n\nกรุณากด Allow Camera ใน Browser'
     );
 
   }
@@ -651,36 +708,38 @@ async function stopPhotoCamera(){
       );
 
 
-    stream = null;
+    stream =
+      null;
 
   }
 
 
   const video =
-    document.querySelector(
-      '#video'
+    document.getElementById(
+      'video'
     );
 
 
   if (video){
 
-    video.srcObject = null;
+    video.srcObject =
+      null;
 
   }
 
 }
 
 
-/* ==================================================
- CAPTURE - COMPRESSED
- 560 px / quality .32
-================================================== */
+/* ======================================================
+ CAPTURE
+ 560PX / QUALITY 0.32
+====================================================== */
 
 async function capturePhoto(){
 
   const video =
-    document.querySelector(
-      '#video'
+    document.getElementById(
+      'video'
     );
 
 
@@ -691,10 +750,11 @@ async function capturePhoto(){
   ){
 
     alert(
-      'กล้องยังไม่พร้อม'
+      'กล้องยังไม่พร้อม กรุณารอสักครู่'
     );
 
     return;
+
   }
 
 
@@ -745,14 +805,16 @@ async function capturePhoto(){
     );
 
 
-  const ctx =
+  const context =
     canvas.getContext(
       '2d',
-      {alpha:false}
+      {
+        alpha:false
+      }
     );
 
 
-  ctx.drawImage(
+  context.drawImage(
     video,
     0,
     0,
@@ -787,8 +849,8 @@ async function capturePhoto(){
 
 
   const preview =
-    document.querySelector(
-      '#photoPreview'
+    document.getElementById(
+      'photoPreview'
     );
 
 
@@ -807,8 +869,8 @@ async function capturePhoto(){
 
 
   document
-    .querySelector(
-      '#captureButton'
+    .getElementById(
+      'captureButton'
     )
     .classList.add(
       'hidden'
@@ -816,8 +878,8 @@ async function capturePhoto(){
 
 
   document
-    .querySelector(
-      '#useButton'
+    .getElementById(
+      'useButton'
     )
     .classList.remove(
       'hidden'
@@ -825,8 +887,8 @@ async function capturePhoto(){
 
 
   document
-    .querySelector(
-      '#retakeButton'
+    .getElementById(
+      'retakeButton'
     )
     .classList.remove(
       'hidden'
@@ -837,12 +899,13 @@ async function capturePhoto(){
 
 async function retakePhoto(){
 
-  capturedPhoto = '';
+  capturedPhoto =
+    '';
 
 
   document
-    .querySelector(
-      '#useButton'
+    .getElementById(
+      'useButton'
     )
     .classList.add(
       'hidden'
@@ -850,8 +913,8 @@ async function retakePhoto(){
 
 
   document
-    .querySelector(
-      '#retakeButton'
+    .getElementById(
+      'retakeButton'
     )
     .classList.add(
       'hidden'
@@ -859,8 +922,8 @@ async function retakePhoto(){
 
 
   document
-    .querySelector(
-      '#captureButton'
+    .getElementById(
+      'captureButton'
     )
     .classList.remove(
       'hidden'
@@ -881,6 +944,7 @@ function sendPhoto(){
     );
 
     return;
+
   }
 
 
@@ -896,15 +960,15 @@ function sendPhoto(){
   setTimeout(
     () =>
       window.close(),
-    150
+    250
   );
 
 }
 
 
-/* ==================================================
+/* ======================================================
  CLOSE
-================================================== */
+====================================================== */
 
 async function closeCameraPage(){
 
