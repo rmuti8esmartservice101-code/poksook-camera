@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1,viewport-fit=cover"
+>
+
+<meta
+  name="theme-color"
+  content="#071923"
+>
+
+<title>
+  พกสุข Camera
+</title>
+
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+<style>
+
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  background:#071923;
+  color:#fff;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",Tahoma,sans-serif;
+}
+
+main{
+  max-width:720px;
+  margin:auto;
+  padding:16px;
+  text-align:center;
+}
+
+.brand{
+  font-size:28px;
+  font-weight:900;
+}
+
+.muted{
+  color:#b8ccd7;
+}
+
+.card{
+  margin-top:15px;
+  padding:15px;
+  border-radius:22px;
+  background:#102b38;
+}
+
+.btn{
+  width:100%;
+  border:0;
+  border-radius:16px;
+  min-height:58px;
+  padding:12px;
+  font-weight:800;
+  font-size:18px;
+  margin-top:9px;
+}
+
+.primary{
+  color:#fff;
+  background:#139ed8;
+}
+
+.success{
+  color:#fff;
+  background:#0bb47c;
+}
+
+.secondary{
+  color:#17364a;
+  background:#e3edf2;
+}
+
+.hidden{
+  display:none!important;
+}
+
+#reader{
+  overflow:hidden;
+  border-radius:17px;
+  min-height:340px;
+}
+
+.camera{
+  position:relative;
+  overflow:hidden;
+  width:100%;
+  max-height:70vh;
+  aspect-ratio:3/4;
+  background:#000;
+  border-radius:18px;
+}
+
+.camera video,
+.camera img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.guide{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:62%;
+  height:68%;
+  transform:translate(-50%,-50%);
+  border:4px solid rgba(255,255,255,.8);
+  border-radius:45%;
+  pointer-events:none;
+}
+
+.status{
+  margin-top:10px;
+  padding:11px;
+  border-radius:13px;
+  background:rgba(255,255,255,.08);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<main>
+
+<div class="brand">
+  พกสุข Camera
+</div>
+
+<p id="subtitle" class="muted"></p>
+
+
+<section
+  id="scannerPage"
+  class="card hidden"
+>
+
+  <div id="reader"></div>
+
+  <div
+    id="scanStatus"
+    class="status"
+  >
+    กำลังเตรียมกล้อง...
+  </div>
+
+  <button
+    class="btn primary"
+    onclick="startScanner()"
+  >
+    📷 เปิดกล้องสแกน
+  </button>
+
+  <button
+    class="btn secondary"
+    onclick="closeCameraPage()"
+  >
+    ปิด
+  </button>
+
+</section>
+
+
+<section
+  id="photoPage"
+  class="card hidden"
+>
+
+  <div class="camera">
+
+    <video
+      id="video"
+      autoplay
+      muted
+      playsinline
+    ></video>
+
+    <img
+      id="photoPreview"
+      class="hidden"
+    >
+
+    <div class="guide"></div>
+
+  </div>
+
+
+  <button
+    id="captureButton"
+    class="btn primary"
+    onclick="capturePhoto()"
+  >
+    📸 ถ่ายภาพ
+  </button>
+
+
+  <button
+    id="useButton"
+    class="btn success hidden"
+    onclick="sendPhoto()"
+  >
+    ✓ ใช้ภาพนี้
+  </button>
+
+
+  <button
+    id="retakeButton"
+    class="btn secondary hidden"
+    onclick="retakePhoto()"
+  >
+    ถ่ายใหม่
+  </button>
+
+</section>
+
+</main>
+
+
+<script>
+
+const params =
+  new URLSearchParams(
+    location.search
+  );
+
+
+const MODE =
+  params.get('mode')
+  || 'scan';
+
+
+const FACING =
+  params.get('facing')
+  || 'environment';
+
+
+const SESSION =
+  params.get('session')
+  || '';
+
+
+const RAW_PARENT_ORIGIN =
+  params.get('parentOrigin')
+  || '';
+
+
+let PARENT_ORIGIN = '';
+
+let scanner = null;
+let stream = null;
+let capturedPhoto = '';
+
+
+try{
+
+  const parsed =
+    new URL(
+      RAW_PARENT_ORIGIN
+    );
+
+
+  if (
+    parsed.protocol === 'https:'
+  ){
+
+    PARENT_ORIGIN =
+      parsed.origin;
+
+  }
+
+}catch(_){}
+
+
+window.addEventListener(
+  'load',
+  init
+);
+
+
+async function init(){
+
+  if (!SESSION){
+
+    alert(
+      'ไม่พบ Camera Session'
+    );
+
+    return;
+  }
+
+
+  if (!PARENT_ORIGIN){
+
+    alert(
+      'ไม่พบ Parent Origin'
+    );
+
+    return;
+  }
+
+
+  if (
+    MODE === 'photo'
+  ){
+
+    document
+      .querySelector(
+        '#photoPage'
+      )
+      .classList.remove(
+        'hidden'
+      );
+
+
+    document
+      .querySelector(
+        '#subtitle'
+      )
+      .textContent =
+      'ถ่ายภาพยืนยันสมาชิก';
+
+
+    await startPhotoCamera();
+
+
+  }else{
+
+    document
+      .querySelector(
+        '#scannerPage'
+      )
+      .classList.remove(
+        'hidden'
+      );
+
+
+    document
+      .querySelector(
+        '#subtitle'
+      )
+      .textContent =
+      'Live QR Scanner';
+
+
+    await startScanner();
+
+  }
+
+}
+
+
+/* ==================================================
+ MESSAGE BACK
+================================================== */
+
+function postBack(
+  type,
+  payload
+){
+
+  if (!window.opener){
+
+    alert(
+      'กรุณาเปิดกล้องจากระบบพกสุข'
+    );
+
+    return;
+  }
+
+
+  window.opener.postMessage(
+
+    Object.assign(
+      {
+
+        source:
+          'POKSOOK_GITHUB_CAMERA',
+
+        session:
+          SESSION,
+
+        type:
+          type
+
+      },
+      payload
+    ),
+
+    PARENT_ORIGIN
+
+  );
+
+}
+
+
+/* ==================================================
+ QR SCANNER
+================================================== */
+
+async function startScanner(){
+
+  const status =
+    document.querySelector(
+      '#scanStatus'
+    );
+
+
+  status.textContent =
+    'กำลังเปิดกล้องหลัง...';
+
+
+  if (scanner){
+
+    try{
+
+      if (
+        scanner.isScanning
+      ){
+
+        await scanner.stop();
+
+      }
+
+    }catch(_){}
+
+
+    try{
+
+      await scanner.clear();
+
+    }catch(_){}
+
+  }
+
+
+  scanner =
+    new Html5Qrcode(
+      'reader'
+    );
+
+
+  try{
+
+    await scanner.start(
+
+      {
+        facingMode:{
+          ideal:'environment'
+        }
+      },
+
+      {
+
+        fps:10,
+
+        qrbox:{
+          width:280,
+          height:280
+        },
+
+        aspectRatio:1
+
+      },
+
+      async decodedText => {
+
+        status.textContent =
+          'อ่าน QR สำเร็จ';
+
+
+        try{
+
+          await scanner.stop();
+
+        }catch(_){}
+
+
+        postBack(
+          'QR_RESULT',
+          {
+            value:
+              decodedText
+          }
+        );
+
+
+        setTimeout(
+          () =>
+            window.close(),
+          150
+        );
+
+      },
+
+      () => {}
+
+    );
+
+
+    status.textContent =
+      'นำ QR เข้าในกรอบ';
+
+
+  }catch(error){
+
+    status.textContent =
+      'เปิดกล้องไม่สำเร็จ';
+
+
+    alert(
+      'เปิดกล้องไม่ได้\n\n'
+      +
+      (
+        error.message
+        ||
+        error
+      )
+      +
+      '\n\nกรุณาตรวจสอบสิทธิ์ Camera'
+    );
+
+  }
+
+}
+
+
+/* ==================================================
+ PHOTO CAMERA
+================================================== */
+
+async function startPhotoCamera(){
+
+  await stopPhotoCamera();
+
+
+  try{
+
+    if (
+      !navigator.mediaDevices
+      ||
+      !navigator.mediaDevices
+        .getUserMedia
+    ){
+
+      throw new Error(
+        'Browser ไม่รองรับกล้อง'
+      );
+
+    }
+
+
+    stream =
+      await navigator
+        .mediaDevices
+        .getUserMedia({
+
+          audio:false,
+
+          video:{
+
+            facingMode:{
+              ideal:FACING
+            },
+
+            width:{
+              ideal:1280
+            },
+
+            height:{
+              ideal:720
+            },
+
+            frameRate:{
+              ideal:24,
+              max:30
+            }
+
+          }
+
+        });
+
+
+    const video =
+      document.querySelector(
+        '#video'
+      );
+
+
+    video.srcObject =
+      stream;
+
+
+    video.classList.remove(
+      'hidden'
+    );
+
+
+    document
+      .querySelector(
+        '#photoPreview'
+      )
+      .classList.add(
+        'hidden'
+      );
+
+
+    await video.play();
+
+
+  }catch(error){
+
+    alert(
+      'เปิดกล้องไม่ได้\n\n'
+      +
+      (
+        error.message
+        ||
+        error
+      )
+      +
+      '\n\nกรุณาอนุญาตสิทธิ์ Camera'
+    );
+
+  }
+
+}
+
+
+async function stopPhotoCamera(){
+
+  if (stream){
+
+    stream
+      .getTracks()
+      .forEach(
+        track =>
+          track.stop()
+      );
+
+
+    stream = null;
+
+  }
+
+
+  const video =
+    document.querySelector(
+      '#video'
+    );
+
+
+  if (video){
+
+    video.srcObject = null;
+
+  }
+
+}
+
+
+/* ==================================================
+ CAPTURE - COMPRESSED
+ 560 px / quality .32
+================================================== */
+
+async function capturePhoto(){
+
+  const video =
+    document.querySelector(
+      '#video'
+    );
+
+
+  if (
+    !video
+    ||
+    !video.videoWidth
+  ){
+
+    alert(
+      'กล้องยังไม่พร้อม'
+    );
+
+    return;
+  }
+
+
+  const MAX_SIDE =
+    560;
+
+
+  const QUALITY =
+    .32;
+
+
+  const scale =
+    Math.min(
+      1,
+      MAX_SIDE /
+      Math.max(
+        video.videoWidth,
+        video.videoHeight
+      )
+    );
+
+
+  const canvas =
+    document.createElement(
+      'canvas'
+    );
+
+
+  canvas.width =
+    Math.max(
+      1,
+      Math.round(
+        video.videoWidth
+        *
+        scale
+      )
+    );
+
+
+  canvas.height =
+    Math.max(
+      1,
+      Math.round(
+        video.videoHeight
+        *
+        scale
+      )
+    );
+
+
+  const ctx =
+    canvas.getContext(
+      '2d',
+      {alpha:false}
+    );
+
+
+  ctx.drawImage(
+    video,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+
+  capturedPhoto =
+    canvas.toDataURL(
+      'image/webp',
+      QUALITY
+    );
+
+
+  if (
+    !capturedPhoto.startsWith(
+      'data:image/webp'
+    )
+  ){
+
+    capturedPhoto =
+      canvas.toDataURL(
+        'image/jpeg',
+        QUALITY
+      );
+
+  }
+
+
+  await stopPhotoCamera();
+
+
+  const preview =
+    document.querySelector(
+      '#photoPreview'
+    );
+
+
+  preview.src =
+    capturedPhoto;
+
+
+  preview.classList.remove(
+    'hidden'
+  );
+
+
+  video.classList.add(
+    'hidden'
+  );
+
+
+  document
+    .querySelector(
+      '#captureButton'
+    )
+    .classList.add(
+      'hidden'
+    );
+
+
+  document
+    .querySelector(
+      '#useButton'
+    )
+    .classList.remove(
+      'hidden'
+    );
+
+
+  document
+    .querySelector(
+      '#retakeButton'
+    )
+    .classList.remove(
+      'hidden'
+    );
+
+}
+
+
+async function retakePhoto(){
+
+  capturedPhoto = '';
+
+
+  document
+    .querySelector(
+      '#useButton'
+    )
+    .classList.add(
+      'hidden'
+    );
+
+
+  document
+    .querySelector(
+      '#retakeButton'
+    )
+    .classList.add(
+      'hidden'
+    );
+
+
+  document
+    .querySelector(
+      '#captureButton'
+    )
+    .classList.remove(
+      'hidden'
+    );
+
+
+  await startPhotoCamera();
+
+}
+
+
+function sendPhoto(){
+
+  if (!capturedPhoto){
+
+    alert(
+      'ยังไม่ได้ถ่ายภาพ'
+    );
+
+    return;
+  }
+
+
+  postBack(
+    'PHOTO_RESULT',
+    {
+      dataUrl:
+        capturedPhoto
+    }
+  );
+
+
+  setTimeout(
+    () =>
+      window.close(),
+    150
+  );
+
+}
+
+
+/* ==================================================
+ CLOSE
+================================================== */
+
+async function closeCameraPage(){
+
+  try{
+
+    if (
+      scanner
+      &&
+      scanner.isScanning
+    ){
+
+      await scanner.stop();
+
+    }
+
+  }catch(_){}
+
+
+  await stopPhotoCamera();
+
+
+  window.close();
+
+}
+
+
+window.addEventListener(
+  'pagehide',
+  () => {
+
+    stopPhotoCamera();
+
+  }
+);
+
+</script>
+
+</body>
+</html>
